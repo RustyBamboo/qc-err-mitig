@@ -1,0 +1,645 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Introduction &#8212; Quantum Noise Characterization and Mitigation: An Introduction</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Quantum Measurement Theory" href="measurement.html" />
+    <link rel="prev" title="About this tutorial" href="../ch0_background/intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Quantum Noise Characterization and Mitigation: An Introduction</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Tutorial on quantum noise characterization and mitigation
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Before you begin
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ch0_background/intro.html">
+   About this tutorial
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Quantum Computing
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="measurement.html">
+   Quantum Measurement Theory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="implementation.html">
+   Physical Implementation
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Noise Characterization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ch2_characterization/intro.html">
+   Noise Characterization
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Noise Mitigation
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ch3_mitigation/intro.html">
+   Noise Mitigation
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Appendix
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../appendix/magnus_1.html">
+   Quantum Dynamics Simulation
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fch1_intro/intro.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/ch1_intro/intro.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pure-states">
+   Pure States
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#several-qubits">
+     Several qubits
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mixed-states">
+   Mixed States
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#single-qubit">
+     Single Qubit
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Several Qubits
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Introduction</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pure-states">
+   Pure States
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#several-qubits">
+     Several qubits
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mixed-states">
+   Mixed States
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#single-qubit">
+     Single Qubit
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Several Qubits
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h1>
+<section id="pure-states">
+<h2>Pure States<a class="headerlink" href="#pure-states" title="Permalink to this headline">#</a></h2>
+<p>Suppose we have a two-state quantum system: a qubit. We label the two discrete states as <span class="math notranslate nohighlight">\(\ket{0} = [1 \; 0]^T\)</span> and <span class="math notranslate nohighlight">\(\ket{1} = [0 \; 1]^T\)</span>, which denote the <em>computational</em> basis. The general state of the qubit is then described as a <em>superposition</em> of these two states:</p>
+<div class="math notranslate nohighlight">
+\[
+\ket{\psi} = \alpha \ket{0} + \beta \ket{1} = [\alpha \; \beta]^T, \quad |\alpha|^2 + |\beta|^2 = 1
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha, \beta \in C\)</span>. This in stark contrast to classical computers where the state of a bit is fixed to either <span class="math notranslate nohighlight">\(0\)</span> or <span class="math notranslate nohighlight">\(1\)</span>. It is often convenient to work in a different basis, such as the <em>plus-minus</em> basis:</p>
+<div class="math notranslate nohighlight">
+\[
+\ket{0} = \frac{\ket{+} + \ket{-}}{\sqrt{2}}, \quad \ket{1} = \frac{\ket{+} - \ket{-}}{\sqrt{2}}.
+\]</div>
+<p>In order to transform the basis, quantum gates can be applied to the qubit to manipulate the input state to a desired state.
+For example, the change-of-basis matrix that maps the <em>computational</em> basis to the <em>plus-minus</em> basis is the Hadamard gate:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+H = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 &amp; 1 \\ 1 &amp; -1 \end{pmatrix}.
+\end{split}\]</div>
+<p>Assuming the initial state of a qubit is <span class="math notranslate nohighlight">\(\ket{0}\)</span>, then preforming the Hadamard gate yields:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} 
+H\ket{0} = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 &amp; 1 \\ 1 &amp; -1 \end{pmatrix} \begin{bmatrix} 1 \\ 0 \end{bmatrix} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \end{bmatrix} = \frac{1}{\sqrt{2}} (\ket{0} + \ket{1}) = \ket{+}.
+\end{split}\]</div>
+<section id="several-qubits">
+<h3>Several qubits<a class="headerlink" href="#several-qubits" title="Permalink to this headline">#</a></h3>
+<p>To describe the collective space of <span class="math notranslate nohighlight">\(n\)</span>-qubits in terms of the individual qubits, the <em>tensor product</em> (<em>Kronecker product</em>) is used: <span class="math notranslate nohighlight">\(\otimes\)</span>. In vector-notation, the number of elements is <span class="math notranslate nohighlight">\(2^n\)</span>. For example, if all <span class="math notranslate nohighlight">\(n\)</span>-qubits are in the <span class="math notranslate nohighlight">\(\ket{0}\)</span> state, then their collective state is:</p>
+<div class="math notranslate nohighlight">
+\[
+\ket{0} \otimes \ket{0} ... \otimes \ket{0} = \ket{0}^{\otimes n} = \ket{00... 0} = [1 \; 0 \; ... \; 0]^T
+\]</div>
+<table class="table" id="representation">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Equivalent representations of the same example state <span class="math notranslate nohighlight">\(\ket{3}\)</span> with 3-qubits</span><a class="headerlink" href="#representation" title="Permalink to this table">#</a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Representation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Tensor Product</p></td>
+<td><p><span class="math notranslate nohighlight">\(\ket{0} \otimes \ket{1} \otimes \ket{1}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Base-2 State</p></td>
+<td><p><span class="math notranslate nohighlight">\(\ket{011}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Base-10 State</p></td>
+<td><p><span class="math notranslate nohighlight">\(\ket{3}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Column Vector</p></td>
+<td><p><span class="math notranslate nohighlight">\([0 \; 0 \; 0 \; 1 \; 0 \; 0 \; 0 \; 0]^T\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>In general, an arbitrary <span class="math notranslate nohighlight">\(n\)</span>-qubit state will be a superposition of the basis formed by the tensor product:</p>
+<div class="math notranslate nohighlight">
+\[
+\ket{\psi} = a_0 \ket{0} + a_1\ket{1} + ... + a_n \ket{n},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\ket{k}\)</span> for <span class="math notranslate nohighlight">\(k &lt; n\)</span> is base-10 equivalent of the base-2 representation (e.g. for 5-qubits, <span class="math notranslate nohighlight">\(\ket{7} = \ket{0} \otimes \ket{0} \otimes \ket{1} \otimes \ket{1} \otimes \ket{1} = \ket{00111})\)</span>. A list summarizing the various representations is shown in <a class="reference internal" href="#representation"><span class="std std-numref">Table 1</span></a>.</p>
+<p>It is important to note that within the <span class="math notranslate nohighlight">\(n\)</span>-qubit space, there are states that cannot be written in terms of tensor products of individual qubit states. These states are known as <em>entangled</em> states. Suppose, for example, we have a 3-qubit system in the state</p>
+<div class="math notranslate nohighlight">
+\[
+\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{000} + \ket{111}).
+\]</div>
+<p>Then there is no tensor product of three individual qubits, <span class="math notranslate nohighlight">\(\ket{\phi_a} = \alpha\ket{0} + \beta\ket{0}\)</span> and <span class="math notranslate nohighlight">\(\ket{\phi_b} = \gamma \ket{0} + \delta \ket{1}\)</span> and <span class="math notranslate nohighlight">\(\ket{\phi_c} = \epsilon \ket{0} + \zeta \ket{1}\)</span>  that will give <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>. These entangled states are pivotal for the theoretical exponential algorithmic speed-up.</p>
+</section>
+</section>
+<section id="mixed-states">
+<h2>Mixed States<a class="headerlink" href="#mixed-states" title="Permalink to this headline">#</a></h2>
+<p>In the previous section, we made an assumption that we have absolute knowledge of the state of our qubits. This enables us to write a column vector that completely describes our state. However, sometimes we may encounter scenarios where there is an underlying classical uncertainty in the actual quantum states. Such scenarios occur when ignoring (ancilla) qubits in a quantum circuit, or when working with experimental setups.</p>
+<section id="single-qubit">
+<h3>Single Qubit<a class="headerlink" href="#single-qubit" title="Permalink to this headline">#</a></h3>
+<p>Let <span class="math notranslate nohighlight">\(p_j\)</span> denote the discrete probability of having a single qubit state <span class="math notranslate nohighlight">\(\ket{\psi_j} = \alpha_j \ket{0} + \beta_j \ket{1}\)</span>. Then the <em>density</em> operator is defined as</p>
+<div class="math notranslate nohighlight">
+\[
+    \rho = \sum_j p_j \ket{\psi_j}\bra{\psi_j}.
+\]</div>
+<p>As an example, suppose we have a devices that is used to initialize the state of a qubit to be <span class="math notranslate nohighlight">\(\ket{\psi} = \ket{0}\)</span>. However, the device is faulty: 99% of the time it will generate the desired state <span class="math notranslate nohighlight">\(\ket{0}\)</span>, but 1% of the time is will produce the state <span class="math notranslate nohighlight">\(\ket{1}\)</span>. Consequentially, if we were to repeatedly measure the state of our qubit right after initialization, using our previous pure-state ideas, we may mistakenly make the conclusion that our qubit is in a superposition <span class="math notranslate nohighlight">\(\ket{\psi} = \alpha \ket{0} + \beta \ket{1}\)</span> where <span class="math notranslate nohighlight">\(|\alpha|^2 = 0.99\)</span> and <span class="math notranslate nohighlight">\(|\beta|^2 = 0.01\)</span> as shown in &#64;fig:1-qubit-faulty-init. This of course is not the case, since with each experiment we actually have a pure state: <span class="math notranslate nohighlight">\(\ket{\psi} = \ket{0}\)</span> or <span class="math notranslate nohighlight">\(\ket{\psi} = \ket{1}\)</span>. To capture this inconsistency, we instead write the state of our qubit as a \textit{density} or \textit{mixed} state:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \rho = \sum_j p_j \ket{\psi_j} \bra{\psi_j} \Rightarrow 0.99 \ket{0}\bra{0} + 0.01 \ket{1}\bra{1} = \begin{bmatrix}0.99 &amp; 0 \\ 0 &amp; 0.01 \end{bmatrix}
+\end{split}\]</div>
+<p>The subsequent operation on the state are then described as</p>
+<div class="math notranslate nohighlight">
+\[
+\rho^\prime = U \rho U^\dagger
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(U\)</span> is some unitary gate.</p>
+<p>The <em>purity</em> of the state <span class="math notranslate nohighlight">\(\rho\)</span> is defined as <span class="math notranslate nohighlight">\(\textrm{Tr}(\rho^2)\)</span>, and a state is pure if <span class="math notranslate nohighlight">\(\textrm{Tr}(\rho^2) = 1\)</span>. Moreover, since there is an associated classical uncertainty, <em>entropy</em> can be defined as</p>
+<div class="math notranslate nohighlight">
+\[
+  S(\rho) = -\textrm{Tr}(\rho \log[\rho]) = -\sum_{k} \lambda_k \log \lambda_k
+\]</div>
+<p>where the <span class="math notranslate nohighlight">\(\log\)</span> is base-2 and <span class="math notranslate nohighlight">\(\lambda_k\)</span> are eigenvalues of <span class="math notranslate nohighlight">\(\rho\)</span>. The entropy tells us how much information we are missing (in bits) about the state; so a pure state has no entropy (<span class="math notranslate nohighlight">\(S(\rho) = 0\)</span>) since there is no missing information.</p>
+</section>
+<section id="id1">
+<h3>Several Qubits<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<p>Continuing the example of an imperfect state initialization, suppose we
+now try to initialize two qubits. The density matrix can then be
+expressed as the four possible combinations, or as a tensor product of
+each individual qubit density state.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\rho &amp; = (0.99 \cdot 0.99) \ket{00}\bra{00} \\
+    &amp; + (0.99 \cdot 0.01) \ket{01}\bra{01} \\
+    &amp; + (0.01 \cdot 0.99) \ket{10}\bra{10} \\
+    &amp; + (0.01 \cdot 0.01) \ket{11}\bra{11} \\
+    &amp; = \rho_A \otimes \rho_B
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\rho_A, \rho_B\)</span> are the density states of each
+individual qubit as defined previously.</p>
+<p>To recover the density matrices <span class="math notranslate nohighlight">\(\rho_A\)</span> or <span class="math notranslate nohighlight">\(\rho_B\)</span> from the
+composite state <span class="math notranslate nohighlight">\(\rho\)</span>, we take the \emph{partial trace}, e.g.:
+<span class="math notranslate nohighlight">\(\rho_A = \textrm{Tr}_B \rho = \sum_i \bra{i}_B \rho \ket{i}_B\)</span>. Since the
+state <span class="math notranslate nohighlight">\(\rho\)</span> is formed by a tensor product, the subsequent partial
+traces to recover <span class="math notranslate nohighlight">\(\rho_A\)</span> and <span class="math notranslate nohighlight">\(\rho_B\)</span> will simply reverse the
+operation producing \ref{eq:mixed-qubit}. In general, <span class="math notranslate nohighlight">\(\rho\)</span> might
+encompass an entangled system, and in this case the partial trace is
+guaranteed to be a mixed state.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./ch1_intro"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../ch0_background/intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">About this tutorial</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="measurement.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Quantum Measurement Theory</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Daniel Volya<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

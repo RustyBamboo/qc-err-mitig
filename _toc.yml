@@ -1,0 +1,28 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+parts:
+- caption: Before you begin
+  chapters:
+  - file: ch0_background/intro
+- caption: Quantum Computing
+  chapters:
+  - file: ch1_intro/intro
+  - file: ch1_intro/measurement
+  - file: ch1_intro/implementation
+- caption: Noise Characterization
+  chapters:
+  - file: ch2_characterization/intro
+- caption: Noise Mitigation
+  chapters:
+  - file: ch3_mitigation/intro
+- caption: Appendix
+  chapters:
+  - file: appendix/magnus_1
+  # - file: w0_background/band_structures
+# chapters:
+# - file: markdown
+# - file: notebooks
+# - file: markdown-notebooks

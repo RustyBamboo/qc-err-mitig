@@ -1,0 +1,3 @@
+# Numerical Algorithms
+
+## Magnus Expansion

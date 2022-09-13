@@ -10,10 +10,14 @@ In this tutorial you will:
 
 This tutorial was developed by [Daniel Volya](https://volya.xyz) for [QCE 2022](https://qce.quantum.ieee.org/2022).
 
-```{admonition} About the logo
-The logo was generated using [Stable Diffusion](https://github.com/CompVis/stable-diffusion).
+---
 
-The bottle is meant to represent the attempt to isolate an intricate quantum system from its enivornment.
+```{admonition} About the logo
+Generated using [Stable Diffusion](https://github.com/CompVis/stable-diffusion), the logo represents the narrative that a quantum system is part of an environment. The bottle represents two conflicting ideas: (1) the attempt to isolate an intricate quantum system from its enivornment (e.g. a quantum computer),  but also (2) the intentional control of the interior system -- as represented by the lid.
+```
+
+```{image} logo.png
+:align: center
 ```
 
 <!-- ```{tableofcontents}

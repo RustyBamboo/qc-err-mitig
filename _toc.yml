@@ -7,6 +7,7 @@ parts:
 - caption: Before you begin
   chapters:
   - file: ch0_background/intro
+  - file: ch0_background/perspective
 - caption: Quantum Computing
   chapters:
   - file: ch1_intro/intro

@@ -39,6 +39,19 @@ Finally, we also want this tutorial to be equally useful if you are, say, a prof
 
 We hope that you find something useful, and we always appreciate your questions and feedback. You can open an issue, (or even make a pull request right away).
 
+```{tip}
+You can run any code in this tutorial yourself either by downloading the code locally or via the cloud using `binder`.
+
+Locally:
+- Get the code: `git clone https://github.com/RustyBamboo/qc-err-mitig`
+- Install the python requirements
+- Open the source files using [`jupytext`](https://jupytext.readthedocs.io/en/latest/) extension
+
+Cloud:
+- Click on the rocket in the top right corner of any page
+```
++++
+
 ## Structure
 
 The tutorial is meant to be _cohesive_ -- at the bare minimum links are provided to resources to explore the topics outside the scope of this tutorial.
@@ -64,6 +77,3 @@ We provide source code for all the computer simulations used in the tutorial as 
 - qutip
 - qiskit
 - mitiq
-
-
-+++

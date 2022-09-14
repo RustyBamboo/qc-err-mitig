@@ -16,6 +16,8 @@ parts:
 - caption: Noise Characterization
   chapters:
   - file: ch2_characterization/intro
+  - file: ch2_characterization/meas
+  - file: ch2_characterization/rand
 - caption: Noise Mitigation
   chapters:
   - file: ch3_mitigation/intro

@@ -50,7 +50,7 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>window.MathJax = {"loader": {"load": ["[tex]/physics"]}, "tex": {"packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -162,7 +162,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../ch2_characterization/intro.html">
-   Review of Quantum Channels
+   An Introduction
   </a>
  </li>
 </ul>
@@ -504,12 +504,12 @@ title="Print to PDF"
 <p>One of the many things that make quantum systems interesting is the effects and consequences of measurement.</p>
 <p>Traditionally the description of measurement in quantum mechanics is terms of project measurements, namely if you have some observable <span class="math notranslate nohighlight">\(\hat{\Lambda}\)</span> then it can be diagonalized using eigenvalues <span class="math notranslate nohighlight">\(\lambda\)</span> and projection operators <span class="math notranslate nohighlight">\(\hat{\Pi_\lambda}\)</span>: <span class="math notranslate nohighlight">\(\hat{\Lambda} = \sum_\lambda \lambda \hat{\Pi_\lambda}\)</span></p>
 <p>The consequences are that for a pure state <span class="math notranslate nohighlight">\(\ket{\psi}\)</span>, the probability to obtain some <span class="math notranslate nohighlight">\(\lambda\)</span> is <span class="math notranslate nohighlight">\(p_\lambda = \bra{\psi} \Pi_\lambda \ket{\psi}\)</span>. Likewise the conditional state would be <span class="math notranslate nohighlight">\(\ket{\psi_\lambda} = \Pi_\lambda \ket{\psi} / \sqrt{p_\lambda}\)</span>. For matrix states, the probability is given by <span class="math notranslate nohighlight">\(p_\lambda = Tr[\rho \hat{\Pi_\lambda}]\)</span> and the conoditional state will then be <span class="math notranslate nohighlight">\(\rho_\lambda = \frac{\hat{\Pi_\lambda} \rho \hat{P_\lambda}}{p_\lambda}\)</span></p>
-<p>But what about the uncoditional state? I.e. what if one <em>makes the measurement, but ignores the result</em>. This will result in a state matrix:</p>
+<p>But what about the unconditional state? I.e. what if one <em>makes the measurement, but ignores the result</em>. This will result in a state matrix:</p>
 <div class="math notranslate nohighlight">
 \[
 \rho(T) = \sum_\lambda p_\lambda \rho_\lambda = \sum_\lambda \hat{\Pi_\lambda} \rho \hat{\Pi_\lambda}
 \]</div>
-<p>Projective measurement is interesting property because in general, it is an entropy-increasing process. Which is a sharp contrast to what happens classically: the unconditional classical state after non-disturbing measurement is identical to the state before the measurement.</p>
+<p>Projective measurement is an interesting property because in general, it is an entropy-increasing process. Which is a sharp contrast to what happens classically: the unconditional classical state after non-disturbing measurement is identical to the state before the measurement.</p>
 <section id="systems-and-meters">
 <h2>Systems and meters<a class="headerlink" href="#systems-and-meters" title="Permalink to this headline">#</a></h2>
 <p>Unfortunately, projective measurement is inadequate. For one, there will be classical noise due to the measuring apparatus. Another more interesting reason is that there are measurement in which the conditional states will not be left in the eigenstate of the measured quantity. Example would be in photon counting, where measurement would leave a vacuum state. The primary reason for these problems is because measurement is usually not done on the system itself but rather observes what effect the system has on the environment.</p>

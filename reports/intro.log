@@ -1,0 +1,49 @@
+Traceback (most recent call last):
+  File "/home/daniel/.local/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/home/daniel/.local/lib/python3.10/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/daniel/.local/lib/python3.10/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/home/daniel/.local/lib/python3.10/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "/home/daniel/.local/lib/python3.10/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/home/daniel/.local/lib/python3.10/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/daniel/.local/lib/python3.10/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+fig, axes = plt.subplots(nrows=2, ncols=2, sharey=True, sharex=True)
+
+im = axes[0, 0].matshow(rho.real, cmap=plt.cm.inferno_r)
+im = axes[0, 1].matshow(rho.imag, cmap=plt.cm.inferno_r)
+
+im = axes[1, 0].matshow(rho_r.real, cmap=plt.cm.inferno_r)
+im = axes[1, 1].matshow(rho_r.imag, cmap=plt.cm.inferno_r)
+
+for ax in axes:
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+axes[0, 0].set_ylabel(r"$\rho$", rotation=0, size='large')
+axes[1, 0].set_ylabel(r"$\rho_\mathrm{tomo}$", rotation=0, size='large')
+
+fig.tight_layout()
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+Input [0;32mIn [15][0m, in [0;36m<cell line: 9>[0;34m()[0m
+[1;32m      7[0m im [38;5;241m=[39m axes[[38;5;241m1[39m, [38;5;241m1[39m][38;5;241m.[39mmatshow(rho_r[38;5;241m.[39mimag, cmap[38;5;241m=[39mplt[38;5;241m.[39mcm[38;5;241m.[39minferno_r)
+[1;32m      9[0m [38;5;28;01mfor[39;00m ax [38;5;129;01min[39;00m axes:
+[0;32m---> 10[0m     [43max[49m[38;5;241;43m.[39;49m[43mset_xticks[49m([])
+[1;32m     11[0m     ax[38;5;241m.[39mset_yticks([])
+[1;32m     13[0m axes[[38;5;241m0[39m, [38;5;241m0[39m][38;5;241m.[39mset_ylabel([38;5;124mr[39m[38;5;124m"[39m[38;5;124m$[39m[38;5;124m\[39m[38;5;124mrho$[39m[38;5;124m"[39m, rotation[38;5;241m=[39m[38;5;241m0[39m, size[38;5;241m=[39m[38;5;124m'[39m[38;5;124mlarge[39m[38;5;124m'[39m)
+
+[0;31mAttributeError[0m: 'numpy.ndarray' object has no attribute 'set_xticks'
+AttributeError: 'numpy.ndarray' object has no attribute 'set_xticks'
+

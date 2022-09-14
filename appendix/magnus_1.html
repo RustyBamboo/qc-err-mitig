@@ -50,7 +50,7 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>window.MathJax = {"loader": {"load": ["[tex]/physics"]}, "tex": {"packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -161,7 +161,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../ch2_characterization/intro.html">
-   Review of Quantum Channels
+   An Introduction
   </a>
  </li>
 </ul>
@@ -558,14 +558,14 @@ U(t, t_0)=\mathcal T\exp\left[-i\int_{t_0}^tH(\tau)d\tau\right]
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathcal T\)</span> is the time-ordering operator (see also <a class="reference external" href="https://en.wikipedia.org/wiki/Dyson_series">Dyson series</a>). But how does one numerically solve this? The standard treatment is to discretize the integrals as Riemann sums</p>
 <div class="math notranslate nohighlight" id="equation-eq-riemann">
-<span class="eqno">(1)<a class="headerlink" href="#equation-eq-riemann" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(2)<a class="headerlink" href="#equation-eq-riemann" title="Permalink to this equation">#</a></span>\[
 U(t)\approx\prod_{a=0}^{k-1}\exp[-iH(a\Delta\tau)\Delta\tau]~~~~(\Delta\tau=t/k)
 \]</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Although this method is used in simulating quantum systems on classical computers, this technique is also commonly found in quantum computing literature with regards to implementating an operator <span class="math notranslate nohighlight">\(U(t)\)</span> as a quantum algorithm.</p>
 </div>
-<p>Equation <a class="reference internal" href="#equation-eq-riemann">(1)</a> has given us a way to compute the propogator. However, a straightfoward analysis of this equation will show that the expansion is not unitary when truncated to finite order. Is this a better strategy to solve the time-dependent equation?</p>
+<p>Equation <a class="reference internal" href="#equation-eq-riemann">(2)</a> has given us a way to compute the propogator. However, a straightfoward analysis of this equation will show that the expansion is not unitary when truncated to finite order. Is this a better strategy to solve the time-dependent equation?</p>
 <p>The following walks through the Magnus expansion, and solving the time-dependent Schrödinger equation when <span class="math notranslate nohighlight">\(H\)</span> does not commute with itself at different times, i.e. when <span class="math notranslate nohighlight">\([H(t_1), H(t_2)] \neq 0\)</span>. The Magnus expansion conserves phase-space relationships. This means that energy is conserved even for long-time dynamics, where as other methods begin to fail – and thus the result remains unitary even when truncated.</p>
 <p>For a thorough review: <a class="reference external" href="https://arxiv.org/abs/0810.5488">arXiv:0810.5488</a></p>
 </section>
@@ -573,21 +573,21 @@ U(t)\approx\prod_{a=0}^{k-1}\exp[-iH(a\Delta\tau)\Delta\tau]~~~~(\Delta\tau=t/k)
 <h2>Magnus Expansion<a class="headerlink" href="#magnus-expansion" title="Permalink to this headline">#</a></h2>
 <p>Consider the linear differential equation of the form</p>
 <div class="math notranslate nohighlight" id="equation-eq-og">
-<span class="eqno">(2)<a class="headerlink" href="#equation-eq-og" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(3)<a class="headerlink" href="#equation-eq-og" title="Permalink to this equation">#</a></span>\[
 \begin{equation}
 Y^\prime(t) = H(t) Y(t);\quad Y(0) = Y_0
 \end{equation}
 \]</div>
 <p>whose solution can be expressed as</p>
 <div class="math notranslate nohighlight" id="equation-eq-sol">
-<span class="eqno">(3)<a class="headerlink" href="#equation-eq-sol" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(4)<a class="headerlink" href="#equation-eq-sol" title="Permalink to this equation">#</a></span>\[
 \begin{equation}\label{eq: sol}
 Y(t) = \exp(\Omega(t))Y_0
 \end{equation}
 \]</div>
-<p>where the difficulty lies in finding <span class="math notranslate nohighlight">\(\Omega(t)\)</span>. Differentiating <a class="reference internal" href="#equation-eq-sol">(3)</a> results in:</p>
+<p>where the difficulty lies in finding <span class="math notranslate nohighlight">\(\Omega(t)\)</span>. Differentiating <a class="reference internal" href="#equation-eq-sol">(4)</a> results in:</p>
 <div class="math notranslate nohighlight" id="equation-eq-expansion">
-<span class="eqno">(4)<a class="headerlink" href="#equation-eq-expansion" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(5)<a class="headerlink" href="#equation-eq-expansion" title="Permalink to this equation">#</a></span>\[
 \begin{equation}\label{eq: expansion}
     Y^\prime(t) = {d\over dt}\exp(\Omega(t))Y_0 = \dexp_{\Omega(t)}(\Omega^\prime(t))\exp(\Omega(t))Y_0
 \end{equation}
@@ -604,7 +604,7 @@ Y(t) = \exp(\Omega(t))Y_0
 \[
 \ad_\Omega^i (C) = [\Omega, \ad_\Omega^{i-1}(C)], \quad i\ge 1
 \]</div>
-<p>Combining <a class="reference internal" href="#equation-eq-og">(2)</a> and <a class="reference internal" href="#equation-eq-expansion">(4)</a> leads to</p>
+<p>Combining <a class="reference internal" href="#equation-eq-og">(3)</a> and <a class="reference internal" href="#equation-eq-expansion">(5)</a> leads to</p>
 <div class="math notranslate nohighlight">
 \[
 \begin{equation}

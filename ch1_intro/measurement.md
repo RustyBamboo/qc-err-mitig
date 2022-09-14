@@ -19,13 +19,13 @@ Traditionally the description of measurement in quantum mechanics is terms of pr
 
 The consequences are that for a pure state $\ket{\psi}$, the probability to obtain some $\lambda$ is $p_\lambda = \bra{\psi} \Pi_\lambda \ket{\psi}$. Likewise the conditional state would be $\ket{\psi_\lambda} = \Pi_\lambda \ket{\psi} / \sqrt{p_\lambda}$. For matrix states, the probability is given by $p_\lambda = Tr[\rho \hat{\Pi_\lambda}]$ and the conoditional state will then be $\rho_\lambda = \frac{\hat{\Pi_\lambda} \rho \hat{P_\lambda}}{p_\lambda}$
 
-But what about the uncoditional state? I.e. what if one *makes the measurement, but ignores the result*. This will result in a state matrix: 
+But what about the unconditional state? I.e. what if one *makes the measurement, but ignores the result*. This will result in a state matrix: 
 
 $$
 \rho(T) = \sum_\lambda p_\lambda \rho_\lambda = \sum_\lambda \hat{\Pi_\lambda} \rho \hat{\Pi_\lambda}
 $$
 
-Projective measurement is interesting property because in general, it is an entropy-increasing process. Which is a sharp contrast to what happens classically: the unconditional classical state after non-disturbing measurement is identical to the state before the measurement. 
+Projective measurement is an interesting property because in general, it is an entropy-increasing process. Which is a sharp contrast to what happens classically: the unconditional classical state after non-disturbing measurement is identical to the state before the measurement. 
 
 ## Systems and meters
 

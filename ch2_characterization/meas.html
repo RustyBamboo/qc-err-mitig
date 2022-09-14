@@ -6,53 +6,56 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Tutorial on quantum noise characterization and mitigation &#8212; Quantum Noise Characterization and Mitigation: An Introduction</title>
+    <title>Measurement Error &#8212; Quantum Noise Characterization and Mitigation: An Introduction</title>
     
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/design-tabs.js"></script>
+    <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="About this tutorial" href="ch0_background/intro.html" />
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"loader": {"load": ["[tex]/physics"]}, "tex": {"packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Randomness" href="rand.html" />
+    <link rel="prev" title="Tomography" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -87,27 +90,27 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="bd-sidebar noprint" id="site-navigation">
     <div class="bd-sidebar__content">
         <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
+    <a class="navbar-brand text-wrap" href="../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
         
       
       
-      <img src="_static/logo.png" class="logo" alt="logo">
+      <img src="../_static/logo.png" class="logo" alt="logo">
       
       
       <h1 class="site-logo" id="site-title">Quantum Noise Characterization and Mitigation: An Introduction</h1>
       
     </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1 current active">
-                <a class="reference internal" href="#">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
                     Tutorial on quantum noise characterization and mitigation
                 </a>
             </li>
@@ -119,12 +122,12 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="ch0_background/intro.html">
+  <a class="reference internal" href="../ch0_background/intro.html">
    About this tutorial
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="ch0_background/perspective.html">
+  <a class="reference internal" href="../ch0_background/perspective.html">
    Setting the Perspective
   </a>
  </li>
@@ -136,17 +139,17 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="ch1_intro/intro.html">
+  <a class="reference internal" href="../ch1_intro/intro.html">
    Introduction
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="ch1_intro/measurement.html">
+  <a class="reference internal" href="../ch1_intro/measurement.html">
    Quantum Measurement Theory
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="ch1_intro/implementation.html">
+  <a class="reference internal" href="../ch1_intro/implementation.html">
    Physical Implementation
   </a>
  </li>
@@ -156,19 +159,19 @@ const thebe_selector_output = ".output, .cell_output"
   Noise Characterization
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="ch2_characterization/intro.html">
+  <a class="reference internal" href="intro.html">
    Tomography
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="ch2_characterization/meas.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Measurement Error
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="ch2_characterization/rand.html">
+  <a class="reference internal" href="rand.html">
    Randomness
   </a>
  </li>
@@ -180,7 +183,7 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="ch3_mitigation/intro.html">
+  <a class="reference internal" href="../ch3_mitigation/intro.html">
    Noise Mitigation
   </a>
  </li>
@@ -192,7 +195,7 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="appendix/magnus_1.html">
+  <a class="reference internal" href="../appendix/magnus_1.html">
    Quantum Dynamics Simulation
   </a>
  </li>
@@ -286,7 +289,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/RustyBamboo/qc-err-mitig/issues/new?title=Issue%20on%20page%20%2Fintro.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/RustyBamboo/qc-err-mitig/issues/new?title=Issue%20on%20page%20%2Fch2_characterization/meas.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -314,7 +317,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="_sources/intro.md"
+        <a href="../_sources/ch2_characterization/meas.md"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -363,7 +366,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Tutorial on quantum noise characterization and mitigation</h1>
+                <h1>Measurement Error</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -375,34 +378,38 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-on-quantum-noise-characterization-and-mitigation">
-<h1>Tutorial on quantum noise characterization and mitigation<a class="headerlink" href="#tutorial-on-quantum-noise-characterization-and-mitigation" title="Permalink to this headline">#</a></h1>
-<p>This is a humble tutorial that seeks to cover various topics in quantum noise characterization and mitigation.</p>
-<p>In this tutorial you will:</p>
-<ul class="simple">
-<li><p>Discover the cruel reality of quantum noise in quantum computers</p></li>
-<li><p>Get an overview of different research directions and important developments</p></li>
-<li><p>Learn to combine the relevant math, simulations, and experiments to improve your understanding</p></li>
-</ul>
-<p>This tutorial was developed by <a class="reference external" href="https://volya.xyz">Daniel Volya</a> for <a class="reference external" href="https://qce.quantum.ieee.org/2022">QCE 2022</a>.</p>
-<hr class="docutils" />
-<div class="admonition-about-the-logo admonition">
-<p class="admonition-title">About the logo</p>
-<p>Generated using <a class="reference external" href="https://github.com/CompVis/stable-diffusion">Stable Diffusion</a>, the logo represents the narrative that a quantum system is part of an environment. The bottle represents two conflicting ideas: (1) the attempt to isolate an intricate quantum system from its enivornment (e.g. a quantum computer),  but also (2) the intentional ability for the environment to control the interior system – as represented by the lid.</p>
-</div>
-<img alt="_images/logo.png" class="align-center" src="_images/logo.png" />
-<!-- ```{tableofcontents}
-``` -->
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
+  <section class="tex2jax_ignore mathjax_ignore" id="measurement-error">
+<h1>Measurement Error<a class="headerlink" href="#measurement-error" title="Permalink to this headline">#</a></h1>
+<p>So far the discussion has been focused purely on gathering information
+of a quantum system. However, a large source of error in current devices
+(1-5% error rate) are from measurement errors. Naive methods in quantum state (process) tomography are susceptible to
+such measurement errors, and more generally to state preparation and
+measurement (SPAM) errors.</p>
+<p>A straightforward but effective classical model for measurement error is
+a Stochastic Assignment matrix</p>
+<div class="math notranslate nohighlight">
+\[
+A_{i,j} = P(i|j)
+\]</div>
+<p>which maps the probability of obtaining an incorrect output <span class="math notranslate nohighlight">\(i\)</span>
+given a correct input <span class="math notranslate nohighlight">\(j\)</span>, where <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> are bitstrings
+associated with a qubit measurement.</p>
+<p>A complete characterization of the <span class="math notranslate nohighlight">\(A\)</span>-matrix requires preparing
+<span class="math notranslate nohighlight">\(2^n\)</span> states. For example, to characterize two qubits, four states are
+needed: <span class="math notranslate nohighlight">\(\{\ket{00}, \ket{01}, \ket{10}, \ket{11}\}\)</span>. If the errors
+are uncorrelated, then the <span class="math notranslate nohighlight">\(A\)</span>-matrix can be constructed as a tensor
+product. In this case, only 2 states are needed as all probabilities can
+be estimated simultaneously by preparing all-zero and all-one state.
+Although the tensor product model is simple, cross-talk errors that are
+present in real-world setups are ignored. A recent work has introduced a
+model that takes into account a limited measure of correlated noise
+based on Continuous Time Markov Processes (CTMP) <a class="reference external" href="https://arxiv.org/abs/2006.14044">arXiv:2006.14044</a>.
+The matrix then has a form <span class="math notranslate nohighlight">\(A = e^G\)</span> where <span class="math notranslate nohighlight">\(G\)</span> is a sum of local
+operators the generate one and two-qubit readout errors. The total cost
+of this approach is <span class="math notranslate nohighlight">\(O(e^{5\gamma} poly(n))\)</span> where <span class="math notranslate nohighlight">\(\gamma\)</span> is
+related to noise strength and assumed small. The authors compare the
+tensor product noise model and the CTMP noise model with a full
+characterization model for 4,5,6,7 qubits.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -418,7 +425,7 @@ title="Print to PDF"
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./."
+            path: "./ch2_characterization"
         },
         predefinedOutput: true
     }
@@ -432,10 +439,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="ch0_background/intro.html" title="next page">
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Tomography</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="rand.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">About this tutorial</p>
+        <p class="prev-next-title">Randomness</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -460,7 +474,7 @@ title="Print to PDF"
     </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
 
   </body>

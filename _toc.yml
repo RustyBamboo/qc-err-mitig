@@ -12,7 +12,6 @@ parts:
   chapters:
   - file: ch1_intro/intro
   - file: ch1_intro/measurement
-  - file: ch1_intro/implementation
 - caption: Noise Characterization
   chapters:
   - file: ch2_characterization/intro
@@ -21,6 +20,7 @@ parts:
 - caption: Noise Mitigation
   chapters:
   - file: ch3_mitigation/intro
+  - file: ch3_mitigation/implementation
 - caption: Appendix
   chapters:
   - file: appendix/magnus_1

@@ -50,6 +50,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"loader": {"load": ["[tex]/physics"]}, "tex": {"packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Noise Mitigation" href="../ch3_mitigation/intro.html" />
@@ -146,11 +148,6 @@ const thebe_selector_output = ".output, .cell_output"
    Quantum Measurement Theory
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../ch1_intro/implementation.html">
-   Physical Implementation
-  </a>
- </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -183,6 +180,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../ch3_mitigation/intro.html">
    Noise Mitigation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ch3_mitigation/implementation.html">
+   Physical Implementation
   </a>
  </li>
 </ul>
@@ -379,6 +381,11 @@ title="Print to PDF"
    Haar Measure
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-qubit">
+   Example: qubit
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -403,6 +410,11 @@ title="Print to PDF"
    Haar Measure
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-qubit">
+   Example: qubit
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -415,8 +427,58 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="randomness">
 <h1>Randomness<a class="headerlink" href="#randomness" title="Permalink to this headline">#</a></h1>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Measure_(mathematics)">Measure theory</a> studies things that are measurable (e.g. length, area, volume) but generalized to various dimensions. The <em>measure</em> tells us how things are distributed and concentrated in a mathematical space.</p>
+<div class="admonition-example-the-sphere admonition">
+<p class="admonition-title">Example: The Sphere</p>
+<p>Any point on the sphere can be specified by three parameters: e.g. (x,y,z) in Cartesian coordinates or <span class="math notranslate nohighlight">\((\rho, \theta, \phi)\)</span> in spherical coordinates.</p>
+<p>Suppose we wish to find the volume. The first thought may be to integrate each parameter over its full range:</p>
+<div class="math notranslate nohighlight">
+\[
+V = \int_0^{r} \int_0^{2\pi} \int_0^{\pi} d\rho~ d\phi~ d\theta = 2\pi^2 r
+\]</div>
+<p>But this is clearly wrong (the volume of a sphere with radius <span class="math notranslate nohighlight">\(r\)</span> is <span class="math notranslate nohighlight">\(\frac{4}{3}\pi r^3\)</span>.) Taking the integral in this way does not account for the <em>structure</em> of the sphere with respect to the parameters. If you have ever studied multivariate calculus this may sound familiar.</p>
+<img alt="../_images/volume-element.png" class="align-center" src="../_images/volume-element.png" />
+<p>The issue is that although the difference <span class="math notranslate nohighlight">\(d\theta\)</span> and <span class="math notranslate nohighlight">\(d\phi\)</span> are the same, there is more <em>stuff</em> near the equator of the sphere. Therefore the integral must account for the value of <span class="math notranslate nohighlight">\(\theta\)</span>. Similarly, as we are closer to the center of the sphere there is less <em>stuff</em> compared to as we go further away from the center. Hence we must also include the radius <span class="math notranslate nohighlight">\(\rho\)</span> as part of the integral.</p>
+<p>So the correct integral is:</p>
+<div class="math notranslate nohighlight">
+\[
+V = \int_0^r \int_0^{2\pi} \int_0^{\pi} \rho^2 \sin \theta~ d\rho~ d\phi~
+d\theta = \frac{4}{3}\pi r^3
+\]</div>
+<p>The extra terms <span class="math notranslate nohighlight">\(\rho^2\sin\theta\)</span> is the <em>measure</em>. The measure weight portions of the sphere differently depending on where they are in the sphere.</p>
+</div>
+<p>Although the <em>measure</em> tells us how to properly integrate, is also tells us another important fact: <em>how to sample points in the spae uniformly as random</em>. We cannot simply take each parameter and sample it from the uniform distribution – this does not take into account the spread of the space. The measure tells us the distribution of each parameters and let us obtain something truly uniform.</p>
 <section id="haar-measure">
 <h2>Haar Measure<a class="headerlink" href="#haar-measure" title="Permalink to this headline">#</a></h2>
+<p>Quantum evolutions (and operations in quantum computing) are described by unitary matrices. Just like the sphere, unitary matrices can be expressed in terms of a fixed set of parameters. For example, a qubit operation can be written as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+U(\alpha, \theta, v_x, v_y, v_z) = e^{i\alpha} \exp(-i \theta/2 \vec{v} \cdot \vec{\sigma}) &amp;= \exp[-i \theta/2 (v_x \sigma_x + v_y \sigma_y + v_z \sigma_z)] \\
+&amp;= \cos(\theta/2) I - i \sin(\theta/2) (v_x \sigma_x + v_y \sigma_y + v_z \sigma_z)
+\end{align}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(v_x^2 + v_y^2 + v_z^2 = 1\)</span>. We ignore <span class="math notranslate nohighlight">\(e^{i\alpha}\)</span> because it is a global phase. So we are left with four parameters. But because we have the constraint that <span class="math notranslate nohighlight">\(v_x^2 + v_y^2 + v_z^2 = 1\)</span>, we only need a total of <strong>3 parameters</strong> to describe a single qubit operation.</p>
+<p>In fact we can write any unitary matrix (ignoring global phase) of size <span class="math notranslate nohighlight">\(N \times N\)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[
+U(\vec{l}) = \exp(-i \vec{l} \cdot \vec{\Lambda})
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\vec{\Lambda}\)</span> contains <span class="math notranslate nohighlight">\(N^2 -1\)</span> operators that define space, similar to the Pauli matrices for the case <span class="math notranslate nohighlight">\(N=2\)</span>.</p>
+<p>For a dimension <span class="math notranslate nohighlight">\(N\)</span>, the unitary matrix of size <span class="math notranslate nohighlight">\(N \times N\)</span> form the unitary group <span class="math notranslate nohighlight">\(U(N)\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Because we ignored the global phase, the operations we provided are technically <span class="math notranslate nohighlight">\(SU(N)\)</span> the <em>special</em> unitary group, where <span class="math notranslate nohighlight">\(det(U) = 1\)</span>.</p>
+</div>
+<p>Just like the points of the sphere, we can perform operations on the unitary group: such as integration, functions, and sample uniformly. But just like the sphere, we have to add the <em>measure</em> in order to properly account for the different weights in different regions of the space. This is known as the <em>Haar measure</em>, is often denoted as <span class="math notranslate nohighlight">\(\mu_N\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(\mu_N\)</span> tells us how to weight the elements of <span class="math notranslate nohighlight">\(U(N)\)</span>. So for example, if we have some function <span class="math notranslate nohighlight">\(f\)</span> acting on the elements of <span class="math notranslate nohighlight">\(U(N)\)</span> and we would like to integrate over this group, we would have:</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{V \in U(N)} f(V) d\mu_N(V).
+\]</div>
+</section>
+<section id="example-qubit">
+<h2>Example: qubit<a class="headerlink" href="#example-qubit" title="Permalink to this headline">#</a></h2>
 </section>
 </section>
 

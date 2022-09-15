@@ -72,6 +72,10 @@ As we enter the **second quantum revolution**, our goal is to _accurately_ contr
 
 Of course, to overcome these concerns, the goal is always to engineer better hardware. But in reality building better quantum hardware is rather hard and expensive to do. Ok, well then maybe we can encoding quantum information in a special subspace and employ [quantum error correction](https://en.wikipedia.org/wiki/Quantum_error_correction). Although powerful, there is an incredible overhead in the number of qubits needed to perform the encoding. Moreover, [thresholds](https://en.wikipedia.org/wiki/Quantum_threshold_theorem) on the physical error rates are relatively uncertain.
 
+```{note}
+Noise was a major early criticism of quantum computing, however quantum error correcting codes were quickly discovered. Essentially you can use multiple physical qubits together to act as one "logical" qubit with better coherence properties than any of the individual qubits. These error correcting codes scale very favourably, so the decoherence of the logical qubit will decrease exponentially with the number of physical qubits (assuming a low enough noise ratio). The exponential error suppression means that decoherence is no longer seen as a fatal problem for quantum computing: though there is a large scope towards satisfying the caveats for the error correction (which is a difficult engineering problem).
+```
+
 The situation seems rather bleak: we can't create _perfect_ quantum hardware, and quantum error correction is impractical. _Is there something we can do?_ 
 
 Well, this leads us to the purpose of this tutorial -- to make use of _noisy_ quantum computers as much as we can. Let us consider where we could improve quantum performance, as shown in the following figure:

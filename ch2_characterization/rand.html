@@ -250,6 +250,35 @@ title="Toggle navigation"
         
     </div>
     <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/RustyBamboo/qc-err-mitig/main?urlpath=tree/ch2_characterization/rand.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
 <button onclick="toggleFullScreen()"
   class="headerbtn"
   data-toggle="tooltip"
@@ -317,6 +346,23 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
+        <a href="../_sources/ch2_characterization/rand.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download notebook file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
         <a href="../_sources/ch2_characterization/rand.md"
    class="headerbtn"
    data-toggle="tooltip"
@@ -380,10 +426,22 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#haar-measure">
    Haar Measure
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-qubit">
+     Example: qubit
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-arbitrary-dimension">
+     Example: arbitrary dimension
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-qubit">
-   Example: qubit
+  <a class="reference internal nav-link" href="#integrating-unitary-operators">
+   Integrating Unitary Operators
   </a>
  </li>
 </ul>
@@ -409,10 +467,22 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#haar-measure">
    Haar Measure
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-qubit">
+     Example: qubit
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-arbitrary-dimension">
+     Example: arbitrary dimension
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-qubit">
-   Example: qubit
+  <a class="reference internal nav-link" href="#integrating-unitary-operators">
+   Integrating Unitary Operators
   </a>
  </li>
 </ul>
@@ -464,7 +534,7 @@ U(\alpha, \theta, v_x, v_y, v_z) = e^{i\alpha} \exp(-i \theta/2 \vec{v} \cdot \v
 \[
 U(\vec{l}) = \exp(-i \vec{l} \cdot \vec{\Lambda})
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\vec{\Lambda}\)</span> contains <span class="math notranslate nohighlight">\(N^2 -1\)</span> operators that define space, similar to the Pauli matrices for the case <span class="math notranslate nohighlight">\(N=2\)</span>.</p>
+<p>where <span class="math notranslate nohighlight">\(\vec{\Lambda}\)</span> contains <span class="math notranslate nohighlight">\(N^2 -1\)</span> <em>traceless Hermitian</em> operators that define space, similar to the Pauli matrices for the case <span class="math notranslate nohighlight">\(N=2\)</span>.</p>
 <p>For a dimension <span class="math notranslate nohighlight">\(N\)</span>, the unitary matrix of size <span class="math notranslate nohighlight">\(N \times N\)</span> form the unitary group <span class="math notranslate nohighlight">\(U(N)\)</span>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -476,9 +546,164 @@ U(\vec{l}) = \exp(-i \vec{l} \cdot \vec{\Lambda})
 \[
 \int_{V \in U(N)} f(V) d\mu_N(V).
 \]</div>
-</section>
 <section id="example-qubit">
-<h2>Example: qubit<a class="headerlink" href="#example-qubit" title="Permalink to this headline">#</a></h2>
+<h3>Example: qubit<a class="headerlink" href="#example-qubit" title="Permalink to this headline">#</a></h3>
+<p>Let us consider the following task: <em>generate a random qubit state</em>. To do this let us generate a Haar-random unitary and then apply it an initial state (e.g. <span class="math notranslate nohighlight">\(\ket{0}\)</span>).</p>
+<p>First let us do this incorrectly. To make things easier, let us use the following representation of a single-qubit gate:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+U(\theta, \phi, \lambda) = \begin{bmatrix} \cos(\theta/2) &amp; -e^{i\lambda} \sin(\theta/2) \\
+e^{i\phi}\sin(\theta/2) &amp; e^{i\lambda + i \phi} \cos(\theta/2)
+\end{bmatrix}
+\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bad_random_qubit_unitary</span><span class="p">():</span>
+    <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">lam</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">lam</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">)],</span>
+            <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">phi</span> <span class="o">+</span> <span class="n">lam</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">))]</span>
+        <span class="p">])</span>
+    <span class="k">return</span> <span class="n">U</span>
+
+<span class="n">samples</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="n">bad_random_unitaries</span> <span class="o">=</span> <span class="p">[</span><span class="n">bad_random_qubit_unitary</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span><span class="p">)]</span>
+<span class="n">bad_random_states</span> <span class="o">=</span> <span class="p">[</span><span class="n">U</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">U</span> <span class="ow">in</span> <span class="n">bad_random_unitaries</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">states</span> <span class="o">=</span> <span class="p">[</span><span class="n">qp</span><span class="o">.</span><span class="n">Qobj</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">bad_random_states</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">Bloch</span><span class="p">()</span>
+<span class="n">b</span><span class="o">.</span><span class="n">point_color</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#ff0000&#39;</span><span class="p">]</span>
+<span class="n">b</span><span class="o">.</span><span class="n">point_marker</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;o&#39;</span><span class="p">]</span>
+<span class="n">b</span><span class="o">.</span><span class="n">add_states</span><span class="p">(</span><span class="n">states</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;point&#39;</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/rand_3_0.png" src="../_images/rand_3_0.png" />
+</div>
+</div>
+<p>Note that although we uniformly sampled our parameters, the output states cluster around the poles of the sphere. Now let us properly sample from the proper Haar measure.</p>
+<p>Unlike the regular sphere, our sphere has a fixed radius of 1, so we need not worry about this parameter. However, similar to the regular sphere, we need to worry about <span class="math notranslate nohighlight">\(\theta\)</span>. Since the adjustment is identical to the regular sphere, we can use <span class="math notranslate nohighlight">\(\sin\theta\)</span>. Hence, in order to uniformly sample <span class="math notranslate nohighlight">\(\theta\)</span> we need to use the distribution <span class="math notranslate nohighlight">\(\mathrm{Pr}(\theta) = \sin \theta\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">rv_continuous</span>
+
+<span class="k">class</span> <span class="nc">sin_theta_dist</span><span class="p">(</span><span class="n">rv_continuous</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+<span class="n">sin_theta_sampler</span> <span class="o">=</span> <span class="n">sin_theta_dist</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">haar_random_qubit_unitary</span><span class="p">():</span>
+    <span class="n">phi</span><span class="p">,</span> <span class="n">lam</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">sin_theta_sampler</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">lam</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">)],</span>
+        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">phi</span> <span class="o">+</span> <span class="n">lam</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">))]</span>
+    <span class="p">])</span>
+    <span class="k">return</span> <span class="n">U</span>
+
+<span class="n">haar_random_unitaries</span> <span class="o">=</span> <span class="p">[</span><span class="n">haar_random_qubit_unitary</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span><span class="p">)]</span>
+<span class="n">haar_random_states</span> <span class="o">=</span> <span class="p">[</span><span class="n">U</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">U</span> <span class="ow">in</span> <span class="n">haar_random_unitaries</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">states</span> <span class="o">=</span> <span class="p">[</span><span class="n">qp</span><span class="o">.</span><span class="n">Qobj</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">haar_random_states</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">Bloch</span><span class="p">()</span>
+<span class="n">b</span><span class="o">.</span><span class="n">point_color</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#ff0000&#39;</span><span class="p">]</span>
+<span class="n">b</span><span class="o">.</span><span class="n">point_marker</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;o&#39;</span><span class="p">]</span>
+<span class="n">b</span><span class="o">.</span><span class="n">add_states</span><span class="p">(</span><span class="n">states</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;point&#39;</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/rand_6_0.png" src="../_images/rand_6_0.png" />
+</div>
+</div>
+<p>As we can see, by using the correct measure, our qubit states are now uniformly distributed over the sphere. Explicitly, our Haar measure is:</p>
+<div class="math notranslate nohighlight">
+\[
+d\mu_2 = \sin \theta d\theta \cdot d\phi \cdot d\lambda.
+\]</div>
+</section>
+<section id="example-arbitrary-dimension">
+<h3>Example: arbitrary dimension<a class="headerlink" href="#example-arbitrary-dimension" title="Permalink to this headline">#</a></h3>
+<p>Following <a class="reference external" href="https://arxiv.org/abs/math-ph/0609050">arXiv:math-ph/0609050</a>, we can use the QR decomposition of a complex-valued matrix to generate Haar-random unitary matrices. This actually implemented in <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.unitary_group.html">scipy.stats.unitary_group</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">haar_random_unitary</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">fixed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">R</span><span class="p">,</span> <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">R</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">I</span>
+
+    <span class="n">Q</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">qr</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">fixed</span><span class="p">:</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="n">R</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)])</span>
+        <span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">@</span> <span class="n">L</span>
+    
+    <span class="k">return</span> <span class="n">Q</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">rand</span> <span class="o">=</span> <span class="p">[</span><span class="n">haar_random_unitary</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span><span class="p">)]</span>
+<span class="n">rand_not_fixed</span> <span class="o">=</span> <span class="p">[</span><span class="n">haar_random_unitary</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">fixed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As explained in <a class="reference external" href="https://arxiv.org/abs/math-ph/0609050">arXiv:math-ph/0609050</a>, the solution to the QR decomposition is not unique. We can take any unitary diagonal matrix <span class="math notranslate nohighlight">\(\Lambda\)</span>, and alter the decomposition as <span class="math notranslate nohighlight">\(QR = Q \Lambda \Lambda^\dagger R = Q^\prime R^\prime\)</span>. To insure the unitary matrices are indeed Haar-random, we need to fix a particular <span class="math notranslate nohighlight">\(\Lambda\)</span> which depends on <span class="math notranslate nohighlight">\(R\)</span>.</p>
+<p>Another fact is that the eigenvalues of a Haar-random unitary matrices should be uniform. And the eigenvalues of a unitary matrix are given as <span class="math notranslate nohighlight">\(e^{i\theta}\)</span>. Let us check if using the QR-decomposition method if our <span class="math notranslate nohighlight">\(\theta\)</span> eigenvalues are uniform!</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eigs_rand</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rand_not_fixed</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="n">hist</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">eigs_rand</span><span class="p">),</span> <span class="mi">50</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Eigenvalue Density&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;QR decomposition with $\Lambda$ not fixed&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/rand_10_0.png" src="../_images/rand_10_0.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eigs_rand</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rand</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="n">hist</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">eigs_rand</span><span class="p">),</span> <span class="mi">50</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Eigenvalue Density&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;QR decomposition with $\Lambda$ fixed&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/rand_11_0.png" src="../_images/rand_11_0.png" />
+</div>
+</div>
+<p>We have successfully generated Haar-random unitary matrices as shown by the uniform distribution of their eigenvalues.</p>
+</section>
+</section>
+<section id="integrating-unitary-operators">
+<h2>Integrating Unitary Operators<a class="headerlink" href="#integrating-unitary-operators" title="Permalink to this headline">#</a></h2>
+<p>Often in quantum computing we will find ourselves needing to perform an integral over quantum objects, such as unitary operators or quantum states.</p>
+<p>For example, our quantum computer performed a quantum operator <span class="math notranslate nohighlight">\(\mathcal{E}\)</span> and we wish to find how <em>close</em> it was to our desired unitary operation <span class="math notranslate nohighlight">\(U\)</span>. Well this require integrating over a uniform (Haar-random) space!</p>
+<div class="math notranslate nohighlight">
+\[
+F(\mathcal{E}, U) = \int \bra{\psi}U^\dagger \mathcal{E} U \ket{\psi}
+\]</div>
 </section>
 </section>
 

@@ -10,6 +10,10 @@ In this tutorial you will:
 
 This tutorial was developed by [Daniel Volya](https://volya.xyz) for [QCE 2022](https://qce.quantum.ieee.org/2022).
 
+If you find this tutorial useful, please consider leaving a star.
+
+[![Star on GitHub](https://img.shields.io/github/stars/rustybamboo/qc-err-mitig?style=social)](https://github.com/rustybamboo/qc-err-mitig/stargazers)
+
 ---
 
 ```{admonition} About the logo

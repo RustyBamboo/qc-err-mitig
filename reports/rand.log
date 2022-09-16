@@ -17,16 +17,58 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-eigs_rand = np.array([np.linalg.eigvals(r) for r in rand]).flatten()
-diffs = 
+#def goe_eigs(N = 10):
+#    A = np.random.randn(N, N)
+#    B = 2**-0.5 * (A + A.T)
+#    E, U = np.linalg.eig(B)
+#
+#    assert np.allclose(U @ U.conj().T, np.eye(N))
+#
+#    D = np.linalg.eigvals(U)  
+#    return np.angle(D)
+#
+#eigs_rand = np.array([goe_eigs() for _ in range(samples)]).flatten()
+#
+#hist = plt.hist(eigs_rand, 100, density=True)
+#plt.plot()
 
-hist = plt.hist(eigs_rand.real, density=True)
+def goe_eigs(N = 10):
+    # Grand Orthogonal Ensemble: 
+    # Hamiltonians with time reversal symmetry.
+    # N: size of the matrix.
+    A = np.random.randn(N, N)
+    B = 2**-0.5 * (A + A.T)
+    for i in range(B):
+        B[i,i] = 2 * B[i,i]
+    D = np.linalg.eigvals(B)  
+    return np.real(D)
+
+eigs = np.array([goe_eigs() for _ in range(samples)]).flatten()
+plt.hist(eigs, 100, density = True)
+
 ------------------
 
-[0;36m  Input [0;32mIn [7][0;36m[0m
-[0;31m    diffs =[0m
-[0m            ^[0m
-[0;31mSyntaxError[0m[0;31m:[0m invalid syntax
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mTypeError[0m                                 Traceback (most recent call last)
+Input [0;32mIn [9][0m, in [0;36m<cell line: 27>[0;34m()[0m
+[1;32m     24[0m     D [38;5;241m=[39m np[38;5;241m.[39mlinalg[38;5;241m.[39meigvals(B)  
+[1;32m     25[0m     [38;5;28;01mreturn[39;00m np[38;5;241m.[39mreal(D)
+[0;32m---> 27[0m eigs [38;5;241m=[39m np[38;5;241m.[39marray([goe_eigs() [38;5;28;01mfor[39;00m _ [38;5;129;01min[39;00m [38;5;28mrange[39m(samples)])[38;5;241m.[39mflatten()
+[1;32m     28[0m plt[38;5;241m.[39mhist(eigs, [38;5;241m100[39m, density [38;5;241m=[39m [38;5;28;01mTrue[39;00m)
 
-SyntaxError: invalid syntax (924017598.py, line 2)
+Input [0;32mIn [9][0m, in [0;36m<listcomp>[0;34m(.0)[0m
+[1;32m     24[0m     D [38;5;241m=[39m np[38;5;241m.[39mlinalg[38;5;241m.[39meigvals(B)  
+[1;32m     25[0m     [38;5;28;01mreturn[39;00m np[38;5;241m.[39mreal(D)
+[0;32m---> 27[0m eigs [38;5;241m=[39m np[38;5;241m.[39marray([[43mgoe_eigs[49m[43m([49m[43m)[49m [38;5;28;01mfor[39;00m _ [38;5;129;01min[39;00m [38;5;28mrange[39m(samples)])[38;5;241m.[39mflatten()
+[1;32m     28[0m plt[38;5;241m.[39mhist(eigs, [38;5;241m100[39m, density [38;5;241m=[39m [38;5;28;01mTrue[39;00m)
+
+Input [0;32mIn [9][0m, in [0;36mgoe_eigs[0;34m(N)[0m
+[1;32m     20[0m A [38;5;241m=[39m np[38;5;241m.[39mrandom[38;5;241m.[39mrandn(N, N)
+[1;32m     21[0m B [38;5;241m=[39m [38;5;241m2[39m[38;5;241m*[39m[38;5;241m*[39m[38;5;241m-[39m[38;5;241m0.5[39m [38;5;241m*[39m (A [38;5;241m+[39m A[38;5;241m.[39mT)
+[0;32m---> 22[0m [38;5;28;01mfor[39;00m i [38;5;129;01min[39;00m [38;5;28;43mrange[39;49m[43m([49m[43mB[49m[43m)[49m:
+[1;32m     23[0m     B[i,i] [38;5;241m=[39m [38;5;241m2[39m [38;5;241m*[39m B[i,i]
+[1;32m     24[0m D [38;5;241m=[39m np[38;5;241m.[39mlinalg[38;5;241m.[39meigvals(B)  
+
+[0;31mTypeError[0m: only integer scalar arrays can be converted to a scalar index
+TypeError: only integer scalar arrays can be converted to a scalar index
 

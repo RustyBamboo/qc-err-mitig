@@ -184,7 +184,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../ch3_mitigation/implementation.html">
-   Physical Implementation
+   Device Characterization
   </a>
  </li>
 </ul>
@@ -440,9 +440,21 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#integrating-unitary-operators">
-   Integrating Unitary Operators
+  <a class="reference internal nav-link" href="#twirling">
+   Twirling
   </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#average-gate-fidelity">
+   Average Gate Fidelity
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-protocol">
+     The Protocol
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -481,9 +493,21 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#integrating-unitary-operators">
-   Integrating Unitary Operators
+  <a class="reference internal nav-link" href="#twirling">
+   Twirling
   </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#average-gate-fidelity">
+   Average Gate Fidelity
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-protocol">
+     The Protocol
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -662,7 +686,7 @@ d\mu_2 = \sin \theta d\theta \cdot d\phi \cdot d\lambda.
 </div>
 </div>
 <p>As explained in <a class="reference external" href="https://arxiv.org/abs/math-ph/0609050">arXiv:math-ph/0609050</a>, the solution to the QR decomposition is not unique. We can take any unitary diagonal matrix <span class="math notranslate nohighlight">\(\Lambda\)</span>, and alter the decomposition as <span class="math notranslate nohighlight">\(QR = Q \Lambda \Lambda^\dagger R = Q^\prime R^\prime\)</span>. To insure the unitary matrices are indeed Haar-random, we need to fix a particular <span class="math notranslate nohighlight">\(\Lambda\)</span> which depends on <span class="math notranslate nohighlight">\(R\)</span>.</p>
-<p>Another fact is that the eigenvalues of a Haar-random unitary matrices should be uniform. And the eigenvalues of a unitary matrix are given as <span class="math notranslate nohighlight">\(e^{i\theta}\)</span>. Let us check if using the QR-decomposition method if our <span class="math notranslate nohighlight">\(\theta\)</span> eigenvalues are uniform!</p>
+<p>Another fact is that the eigenvalues of a Haar-random unitary matrices should be uniform. And the eigenvalues of a unitary matrix are given as <span class="math notranslate nohighlight">\(e^{i\theta}\)</span>. Let us check that using the QR-decomposition method our <span class="math notranslate nohighlight">\(\theta\)</span> eigenvalues are indeed uniform.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eigs_rand</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rand_not_fixed</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
@@ -694,16 +718,144 @@ d\mu_2 = \sin \theta d\theta \cdot d\phi \cdot d\lambda.
 </div>
 </div>
 <p>We have successfully generated Haar-random unitary matrices as shown by the uniform distribution of their eigenvalues.</p>
+<!-- ### Random unitary: GOE and Matrix Diagonalization 
+
+```{code-cell} ipython3
+def goe_eigs(N = 10):
+    A = np.random.randn(N, N)
+    B = (A + A.T) /2
+    #for i in range(len(B)):
+    #    B[i,i] = 2 * B[i,i]
+    E, U = np.linalg.eig(B)
+
+    assert np.allclose(U @ U.conj().T, np.eye(N))
+
+    D = np.linalg.eigvals(U)  
+    return np.angle(D)
+
+eigs_rand = np.array([goe_eigs() for _ in range(samples)]).flatten()
+
+hist = plt.hist(eigs_rand, 100, density=True)
+plt.plot()
+``` -->
 </section>
 </section>
-<section id="integrating-unitary-operators">
-<h2>Integrating Unitary Operators<a class="headerlink" href="#integrating-unitary-operators" title="Permalink to this headline">#</a></h2>
-<p>Often in quantum computing we will find ourselves needing to perform an integral over quantum objects, such as unitary operators or quantum states.</p>
-<p>For example, our quantum computer performed a quantum operator <span class="math notranslate nohighlight">\(\mathcal{E}\)</span> and we wish to find how <em>close</em> it was to our desired unitary operation <span class="math notranslate nohighlight">\(U\)</span>. Well this require integrating over a uniform (Haar-random) space!</p>
+<section id="twirling">
+<h2>Twirling<a class="headerlink" href="#twirling" title="Permalink to this headline">#</a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Twirling a quantum channel <span class="math notranslate nohighlight">\(\mathcal{E}\)</span> consists of averaging <span class="math notranslate nohighlight">\(\mathcal{E}\)</span> under the composition <span class="math notranslate nohighlight">\(\mathcal{U} \circ \mathcal{E} \circ \mathcal{U}^\dagger\)</span> for unitary operations <span class="math notranslate nohighlight">\(U(\rho) = U \rho U^\dagger\)</span> chosen according to some probability distribution. The average channel</p>
+<div class="math notranslate nohighlight" id="equation-eq-continuous-twirl">
+<span class="eqno">(2)<a class="headerlink" href="#equation-eq-continuous-twirl" title="Permalink to this equation">#</a></span>\[\begin{split}
+\begin{align}
+\mathcal{E}_T(\rho) &amp;= \int_{U(N)} \mathcal{U} \circ \mathcal{E} \circ \mathcal{U}^\dagger(\rho) dU \\
+&amp;=\int_{U(N)} U^\dagger \mathcal{E}(U\rho U^\dagger) U dU
+\end{align}
+\end{split}\]</div>
+<p>is known as the <em>twirled channel</em>.</p>
+<p>When the distribution over unitaries is <em>discrete</em> we have</p>
 <div class="math notranslate nohighlight">
 \[
-F(\mathcal{E}, U) = \int \bra{\psi}U^\dagger \mathcal{E} U \ket{\psi}
+\mathcal{E}(\rho) = \sum_i \mathrm{pr}(\mathcal{U}_i) \mathcal{U}_i \circ \mathcal{E} \circ \mathcal{U}_i^\dagger(\rho)
 \]</div>
+</div>
+<p>Sampling from the uniform Haar-measure <span class="math notranslate nohighlight">\(\mu_N\)</span>, <a class="reference internal" href="#equation-eq-continuous-twirl">(2)</a> becomes</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{E}_T(\rho) = \int_{U(N)} U^\dagger \mathcal{E}(U\rho U^\dagger) U d\mu_N(U).
+\]</div>
+<p>Intuitively, because all the elements are from the full unitary group, we would expect that the resulting channel contains a large amount of symmetry lettings us describe with it a small number of parameters. And indeed! The resulting operation can be described as the depolarizing channel</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{E}_T(\rho) = p \rho + (1-p) \frac{1}{N}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(p \in [0, 1]\)</span>.</p>
+</section>
+<section id="average-gate-fidelity">
+<h2>Average Gate Fidelity<a class="headerlink" href="#average-gate-fidelity" title="Permalink to this headline">#</a></h2>
+<p>In many instances it is useful to estimate how “close” a quantum operation is to
+a given unitary operation. For instance during a quantum computation one may
+want to implement the unitary gate <span class="math notranslate nohighlight">\(U\)</span> and, as with any physical implementation,
+this will not be perfect. Thus the resulting operation will be represented by a
+channel <span class="math notranslate nohighlight">\(\mathcal{E}\)</span>. It would be useful to have an idea of how well <span class="math notranslate nohighlight">\(\mathcal{E}\)</span> approximates <span class="math notranslate nohighlight">\(\mathcal{U}\)</span>. As
+noted previously there are many different measures of how close two quantum
+operations (e.g. the fidelity and trace distance). One important measure is related to the fidelity and is called
+the average gate fidelity.</p>
+<!-- Suppose, our quantum computer performed a quantum operator $\mathcal{E}$ and we wish to find how _close_ it was to our desired unitary operation $U$. Well this requires integrating over a uniform (Haar-random) space! -->
+<!-- $$
+F(\mathcal{E}, U) = \int \bra{\psi}U^\dagger \mathcal{E} U \ket{\psi} d\psi
+$$ -->
+<p>The average gate fidelity between <span class="math notranslate nohighlight">\(\mathcal{E}\)</span> and <span class="math notranslate nohighlight">\(\mathcal{U}\)</span>, <span class="math notranslate nohighlight">\(\overline{{{F_{g}}}}({\mathcal E},\mathcal U)\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[
+\overline{{{F_{g}}}}({\mathcal E},\mathcal U)=\int d\psi\;t r\left({\cal U}\left(|\psi\rangle\langle\psi|\right){\mathcal E}\left(|\psi\rangle\langle\psi|\right)\right).
+\]</div>
+<p>The integral is over the unitarily Fubini-Study measure on pure states. We can rewrite this expression as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\overline{{{F_{g}}}}(\cal E, \cal U)&amp;=\int d\psi\;t r\left(U\left(|\psi\rangle\langle\psi|\right)\Lambda\circ U\left(|\psi\rangle\langle\psi|\right)\right) \\
+&amp;= \int d\psi\,t r\left(U|\psi\rangle\langle\psi|U^{-1}\Lambda\left(U|\psi\rangle\langle\psi|U^{-1}\right)\right)
+\end{align}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Lambda\)</span> is the cumulative noise operator</p>
+<div class="math notranslate nohighlight">
+\[
+\Lambda = \mathcal{E} \circ \mathcal{U}^{-1},
+\]</div>
+<p>and <span class="math notranslate nohighlight">\(U\)</span> is the unitary Kraus operator for <span class="math notranslate nohighlight">\(\mathcal{U}\)</span>.</p>
+<p>If we twirl <span class="math notranslate nohighlight">\(\Lambda\)</span> we can then write</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\overline{{{F_{g}}}}(\cal E, \cal U)&amp;=\int_{\mathcal{Q}_{\cdot}}\!\!d\psi\,t r\left(|\psi\rangle\langle\psi\,|U^{-1}\left(\Lambda\left(U|\psi\rangle\langle\psi|U^{-1}\right)\right)U\right) \\
+&amp;=\int d\psi\;t r\left(|\psi\rangle\langle\psi|U^{-1}\circ\Lambda\circ U\left(|\psi\rangle\langle\psi|\right)\right).
+\end{align}
+\end{split}\]</div>
+<p>As derived in <a class="reference external" href="https://arxiv.org/abs/quant-ph/0205035">arXiv:quant-ph/0205035</a>, we can express this as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\overline{{{F_{g}}}}(\mathcal{E}, \mathcal{U}) &amp;= \mathrm{Tr}\left[\rho \left( p\rho + (1-p)\frac{1}{N} \right) \right] \\
+&amp;= p + \frac{1-p}{N} \\
+&amp;= \frac{\sum_{k}|\mathrm{Tr}(A_{k})|^{2}+N}{N^{2}+N}
+\end{align}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\{ A_k \}\)</span> are a set of Kraus operators for <span class="math notranslate nohighlight">\(\mathcal{E}\)</span>.</p>
+<p>p is called the noise strength parameter and characterizes how well <span class="math notranslate nohighlight">\(\mathcal{E}\)</span> approxi-
+mates \mathcal{U}. If <span class="math notranslate nohighlight">\(p\)</span> is close to 1, then <span class="math notranslate nohighlight">\(\mathcal{E}\)</span> approximates <span class="math notranslate nohighlight">\(\mathcal{U}\)</span> well, while if p is close to 0 then <span class="math notranslate nohighlight">\(\mathcal{E}\)</span> does not resemble <span class="math notranslate nohighlight">\(\mathcal{U}\)</span>.</p>
+<section id="the-protocol">
+<h3>The Protocol<a class="headerlink" href="#the-protocol" title="Permalink to this headline">#</a></h3>
+<p>Let us now express the protocol for estimating <span class="math notranslate nohighlight">\(\overline{{{F_{g}}}}(\mathcal{E}, \mathcal{U})\)</span>.</p>
+<p>We have</p>
+<div class="math notranslate nohighlight">
+\[
+\overline{{{F_{g}}}}({\mathcal{E}},{\cal{U}})= \int_{U(N)} \mathrm{Tr} \left(U\rho U^{-1} (\Lambda (U\rho U^{-1}))\right)
+\]</div>
+<p>which is the average over the unitary group of the function <span class="math notranslate nohighlight">\(f : U(N) \mapsto \mathbb{R}\)</span> defined by</p>
+<div class="math notranslate nohighlight">
+\[
+f(U)=\mathrm{Tr}\left(\rho\,U^{-1}\left(\Lambda\left(U\rho U^{-1}\right)\right)U\right).
+\]</div>
+<p><span class="math notranslate nohighlight">\(\rho\)</span> may be taken as the computation basis <span class="math notranslate nohighlight">\(\ket{0} ... \ket{0}\ket{0}\bra{0}...\bra{0}\bra{0}\)</span>. This essentially tells us that if choose a unitary operator at random and implement it, then <span class="math notranslate nohighlight">\(f(U)\)</span> will be close to the average <span class="math notranslate nohighlight">\(\overline{{{F_{g}}}}({\mathcal{E}},{\cal{U}})\)</span> in that</p>
+<div class="math notranslate nohighlight">
+\[
+f(U)=p+{\frac{1-p}{N}}+\mathrm{O}\left({\frac{1}{\sqrt{N}}}\right).
+\]</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>There are two main drawbacks to this protocol for the determining the average fidelity of <span class="math notranslate nohighlight">\(\mathcal{E}\)</span> and U,</p>
+<ol class="simple">
+<li><p>Choosing a random unitary over the Haar measure is exponentially hard in system dimension <span class="math notranslate nohighlight">\(N\)</span>.</p></li>
+<li><p>Infeasible in general, to calculate <span class="math notranslate nohighlight">\(f(U)\)</span> for a unitary <span class="math notranslate nohighlight">\(U\)</span>, one needs to either</p>
+<ul class="simple">
+<li><p>perform a measurement in the basis defined by <span class="math notranslate nohighlight">\(U\)</span> acting on the computational basis</p></li>
+<li><p>or perform full process tomography on the output <span class="math notranslate nohighlight">\(\mathcal{E}(\rho) = \Lambda \circ \cal{U}(\rho)\)</span></p></li>
+</ul>
+</li>
+</ol>
+</div>
+</section>
 </section>
 </section>
 

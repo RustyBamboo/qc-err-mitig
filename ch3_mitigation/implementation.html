@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Physical Implementation &#8212; Quantum Noise Characterization and Mitigation: An Introduction</title>
+    <title>Device Characterization &#8212; Quantum Noise Characterization and Mitigation: An Introduction</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -184,7 +184,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Physical Implementation
+   Device Characterization
   </a>
  </li>
 </ul>
@@ -467,7 +467,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Physical Implementation</h1>
+                <h1>Device Characterization</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -523,8 +523,8 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="physical-implementation">
-<h1>Physical Implementation<a class="headerlink" href="#physical-implementation" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="device-characterization">
+<h1>Device Characterization<a class="headerlink" href="#device-characterization" title="Permalink to this headline">#</a></h1>
 <p>Quantum computers are <em>real</em> quantum systems that we wish to design and control. Moreover, quantum computers face quite the conflicting requirements: on one hand we wish to interact with the system to control and measure it; but on the other hand we wish to protect the system from the environment. None the less, experimental realizations of quantum computers has made significant progress in the past two decades.</p>
 <section id="superconducting-qubits">
 <h2>Superconducting Qubits<a class="headerlink" href="#superconducting-qubits" title="Permalink to this headline">#</a></h2>
@@ -722,7 +722,7 @@ E_n = E_C M_a(\mu_n, -\frac{E_J}{2E_C})
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">EC</span><span class="p">,</span> <span class="n">EJ</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">losses</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">*</span><span class="n">x0</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;rd&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Approximation&quot;</span><span class="p">)</span>
@@ -738,6 +738,18 @@ E_n = E_C M_a(\mu_n, -\frac{E_J}{2E_C})
 </div>
 <div class="cell_output docutils container">
 <img alt="../_images/implementation_10_0.png" src="../_images/implementation_10_0.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;E_c/E_j: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>E_c/E_j: 0.012929503687487498
+</pre></div>
+</div>
 </div>
 </div>
 </section>
@@ -769,7 +781,7 @@ E_n = E_C M_a(\mu_n, -\frac{E_J}{2E_C})
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/implementation_12_0.png" src="../_images/implementation_12_0.png" />
+<img alt="../_images/implementation_13_0.png" src="../_images/implementation_13_0.png" />
 </div>
 </div>
 <p>References:</p>

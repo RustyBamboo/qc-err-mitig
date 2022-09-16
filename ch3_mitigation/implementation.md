@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Physical Implementation
+# Device Characterization
 
 Quantum computers are _real_ quantum systems that we wish to design and control. Moreover, quantum computers face quite the conflicting requirements: on one hand we wish to interact with the system to control and measure it; but on the other hand we wish to protect the system from the environment. None the less, experimental realizations of quantum computers has made significant progress in the past two decades.
 
@@ -224,6 +224,8 @@ for i, ec in enumerate(EC):
 ```
 
 ```{code-cell} ipython3
+:tags: [hide-input]
+
 plt.pcolormesh(EC, EJ, np.log(losses.T))
 plt.plot(*x0[:2], 'rd', label="Approximation")
 plt.plot(*result.x[:2], 'r*', label="Optimization")
@@ -233,6 +235,11 @@ plt.title("Error Landscape")
 plt.colorbar()
 plt.legend()
 plt.show()
+```
+
+```{code-cell} ipython3
+:tags: [hide-input]
+print(f"E_c/E_j: {result.x[0]/result.x[1]}")
 ```
 
 ### As a Qubit

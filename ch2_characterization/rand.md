@@ -4,9 +4,9 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.11.4
+    jupytext_version: 1.14.1
 kernelspec:
-  display_name: Python 3
+  display_name: Python 3 (ipykernel)
   language: python
   name: python3
 ---
@@ -95,12 +95,12 @@ $$
 
 ```{code-cell} ipython3
 :tags: [remove-cell]
+
 from jupyterquiz import display_quiz
 import qutip as qp
 import numpy as np
 import matplotlib.pyplot as plt
 ```
-
 
 ```{code-cell} ipython3
 def bad_random_qubit_unitary():
@@ -199,6 +199,7 @@ Another fact is that the eigenvalues of a Haar-random unitary matrices should be
 
 ```{code-cell} ipython3
 :tags: [hide-input]
+
 eigs_rand = np.array([np.linalg.eigvals(r) for r in rand_not_fixed]).flatten()
 
 hist = plt.hist(np.angle(eigs_rand), 50, density=True)
@@ -209,6 +210,7 @@ plt.show()
 
 ```{code-cell} ipython3
 :tags: [hide-input]
+
 eigs_rand = np.array([np.linalg.eigvals(r) for r in rand]).flatten()
 
 hist = plt.hist(np.angle(eigs_rand), 50, density=True)
@@ -241,12 +243,141 @@ plt.plot()
 ``` -->
 
 
-## Integrating Unitary Operators
+## Twirling
 
-Often in quantum computing we will find ourselves needing to perform an integral over quantum objects, such as unitary operators or quantum states.
 
-For example, our quantum computer performed a quantum operator $\mathcal{E}$ and we wish to find how _close_ it was to our desired unitary operation $U$. Well this require integrating over a uniform (Haar-random) space!
+
+```{important}
+Twirling a quantum channel $\mathcal{E}$ consists of averaging $\mathcal{E}$ under the composition $\mathcal{U} \circ \mathcal{E} \circ \mathcal{U}^\dagger$ for unitary operations $U(\rho) = U \rho U^\dagger$ chosen according to some probability distribution. The average channel
 
 $$
-F(\mathcal{E}, U) = \int \bra{\psi}U^\dagger \mathcal{E} U \ket{\psi}
+\begin{align}
+\mathcal{E}_T(\rho) &= \int_{U(N)} \mathcal{U} \circ \mathcal{E} \circ \mathcal{U}^\dagger(\rho) dU \\
+&=\int_{U(N)} U^\dagger \mathcal{E}(U\rho U^\dagger) U dU
+\end{align}
+$$(eq:continuous-twirl)
+
+is known as the _twirled channel_.
+
+When the distribution over unitaries is _discrete_ we have
+
 $$
+\mathcal{E}(\rho) = \sum_i \mathrm{pr}(\mathcal{U}_i) \mathcal{U}_i \circ \mathcal{E} \circ \mathcal{U}_i^\dagger(\rho)
+$$
+
+```
+
+Sampling from the uniform Haar-measure $\mu_N$, {eq}`eq:continuous-twirl` becomes
+
+$$
+\mathcal{E}_T(\rho) = \int_{U(N)} U^\dagger \mathcal{E}(U\rho U^\dagger) U d\mu_N(U).
+$$
+
+Intuitively, because all the elements are from the full unitary group, we would expect that the resulting channel contains a large amount of symmetry lettings us describe with it a small number of parameters. And indeed! The resulting operation can be described as the depolarizing channel
+
+$$
+\mathcal{E}_T(\rho) = p \rho + (1-p) \frac{1}{N}
+$$
+
+where $p \in [0, 1]$.
+
+## Average Gate Fidelity
+
+In many instances it is useful to estimate how "close" a quantum operation is to
+a given unitary operation. For instance during a quantum computation one may
+want to implement the unitary gate $U$ and, as with any physical implementation,
+this will not be perfect. Thus the resulting operation will be represented by a
+channel $\mathcal{E}$. It would be useful to have an idea of how well $\mathcal{E}$ approximates $\mathcal{U}$. As
+noted previously there are many different measures of how close two quantum
+operations (e.g. the fidelity and trace distance). One important measure is related to the fidelity and is called
+the average gate fidelity.
+
+<!-- Suppose, our quantum computer performed a quantum operator $\mathcal{E}$ and we wish to find how _close_ it was to our desired unitary operation $U$. Well this requires integrating over a uniform (Haar-random) space! -->
+
+<!-- $$
+F(\mathcal{E}, U) = \int \bra{\psi}U^\dagger \mathcal{E} U \ket{\psi} d\psi
+$$ -->
+
+The average gate fidelity between $\mathcal{E}$ and $\mathcal{U}$, $\overline{{{F_{g}}}}({\mathcal E},\mathcal U)$ is given by
+
+$$
+\overline{{{F_{g}}}}({\mathcal E},\mathcal U)=\int d\psi\;t r\left({\cal U}\left(|\psi\rangle\langle\psi|\right){\mathcal E}\left(|\psi\rangle\langle\psi|\right)\right).
+$$
+
+The integral is over the unitarily Fubini-Study measure on pure states. We can rewrite this expression as
+
+$$
+\begin{align}
+\overline{{{F_{g}}}}(\cal E, \cal U)&=\int d\psi\;t r\left(U\left(|\psi\rangle\langle\psi|\right)\Lambda\circ U\left(|\psi\rangle\langle\psi|\right)\right) \\
+&= \int d\psi\,t r\left(U|\psi\rangle\langle\psi|U^{-1}\Lambda\left(U|\psi\rangle\langle\psi|U^{-1}\right)\right)
+\end{align}
+$$
+
+where $\Lambda$ is the cumulative noise operator 
+
+$$
+\Lambda = \mathcal{E} \circ \mathcal{U}^{-1},
+$$
+
+and $U$ is the unitary Kraus operator for $\mathcal{U}$.
+
+If we twirl $\Lambda$ we can then write
+
+$$
+\begin{align}
+\overline{{{F_{g}}}}(\cal E, \cal U)&=\int_{\mathcal{Q}_{\cdot}}\!\!d\psi\,t r\left(|\psi\rangle\langle\psi\,|U^{-1}\left(\Lambda\left(U|\psi\rangle\langle\psi|U^{-1}\right)\right)U\right) \\
+&=\int d\psi\;t r\left(|\psi\rangle\langle\psi|U^{-1}\circ\Lambda\circ U\left(|\psi\rangle\langle\psi|\right)\right).
+\end{align}
+$$
+
+
+As derived in [arXiv:quant-ph/0205035](https://arxiv.org/abs/quant-ph/0205035), we can express this as
+
+$$
+\begin{align}
+\overline{{{F_{g}}}}(\mathcal{E}, \mathcal{U}) &= \mathrm{Tr}\left[\rho \left( p\rho + (1-p)\frac{1}{N} \right) \right] \\
+&= p + \frac{1-p}{N} \\
+&= \frac{\sum_{k}|\mathrm{Tr}(A_{k})|^{2}+N}{N^{2}+N}
+\end{align}
+$$
+
+where $\{ A_k \}$ are a set of Kraus operators for $\mathcal{E}$. 
+
+p is called the noise strength parameter and characterizes how well $\mathcal{E}$ approxi-
+mates \mathcal{U}. If $p$ is close to 1, then $\mathcal{E}$ approximates $\mathcal{U}$ well, while if p is close to 0 then $\mathcal{E}$ does not resemble $\mathcal{U}$.
+
+### The Protocol
+
+Let us now express the protocol for estimating $\overline{{{F_{g}}}}(\mathcal{E}, \mathcal{U})$.
+
+We have
+
+$$
+\overline{{{F_{g}}}}({\mathcal{E}},{\cal{U}})= \int_{U(N)} \mathrm{Tr} \left(U\rho U^{-1} (\Lambda (U\rho U^{-1}))\right)
+$$
+
+which is the average over the unitary group of the function $f : U(N) \mapsto \mathbb{R}$ defined by
+
+$$
+f(U)=\mathrm{Tr}\left(\rho\,U^{-1}\left(\Lambda\left(U\rho U^{-1}\right)\right)U\right).
+$$
+
+$\rho$ may be taken as the computation basis $\ket{0} ... \ket{0}\ket{0}\bra{0}...\bra{0}\bra{0}$. This essentially tells us that if choose a unitary operator at random and implement it, then $f(U)$ will be close to the average $\overline{{{F_{g}}}}({\mathcal{E}},{\cal{U}})$ in that
+
+$$
+f(U)=p+{\frac{1-p}{N}}+\mathrm{O}\left({\frac{1}{\sqrt{N}}}\right).
+$$
+
+```{caution}
+There are two main drawbacks to this protocol for the determining the average fidelity of $\mathcal{E}$ and U,
+
+1. Choosing a random unitary over the Haar measure is exponentially hard in system dimension $N$.
+2. Infeasible in general, to calculate $f(U)$ for a unitary $U$, one needs to either
+    - perform a measurement in the basis defined by $U$ acting on the computational basis
+    - or perform full process tomography on the output $\mathcal{E}(\rho) = \Lambda \circ \cal{U}(\rho)$
+
+```
+
+```{code-cell} ipython3
+
+```

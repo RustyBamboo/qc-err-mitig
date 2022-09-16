@@ -1,7 +1,7 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: 'Quantum Noise Characterization and Mitigation: An Introduction'
+title: 'Quantum Noise Characterization and Mitigation'
 author: Daniel Volya
 logo: logo.png
 

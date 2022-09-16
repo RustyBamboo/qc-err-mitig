@@ -20,7 +20,10 @@ parts:
 - caption: Noise Mitigation
   chapters:
   - file: ch3_mitigation/intro
-  - file: ch3_mitigation/implementation
+  - file: ch3_mitigation/device
+  - file: ch3_mitigation/pulse
+  - file: ch3_mitigation/qu_algorithm
+  - file: ch3_mitigation/cancel
 - caption: Appendix
   chapters:
   - file: appendix/magnus_1

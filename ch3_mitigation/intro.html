@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Noise Mitigation &#8212; Quantum Noise Characterization and Mitigation: An Introduction</title>
+    <title>Introduction &#8212; Quantum Noise Characterization and Mitigation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,7 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Physical Implementation" href="implementation.html" />
+    <link rel="next" title="Device Characterization" href="device.html" />
     <link rel="prev" title="Randomness" href="../ch2_characterization/rand.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -97,7 +97,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Quantum Noise Characterization and Mitigation: An Introduction</h1>
+      <h1 class="site-logo" id="site-title">Quantum Noise Characterization and Mitigation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -177,12 +177,27 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Noise Mitigation
+   Introduction
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="implementation.html">
-   Physical Implementation
+  <a class="reference internal" href="device.html">
+   Device Characterization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pulse.html">
+   Pulse Optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="qu_algorithm.html">
+   Quantum Algorithms
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cancel.html">
+   Noise Cancellation
   </a>
  </li>
 </ul>
@@ -364,7 +379,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Noise Mitigation</h1>
+                <h1>Introduction</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -376,8 +391,16 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="noise-mitigation">
-<h1>Noise Mitigation<a class="headerlink" href="#noise-mitigation" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h1>
+<p>Now that we are able to identify the characteristics of noise in our quantum computers, we would like some ways to <em>mitigate</em> (at best <em>eliminate</em>) this noise.</p>
+<img alt="../_images/mitigation.drawio.svg" class="align-center" src="../_images/mitigation.drawio.svg" /><p>We will work our way from the low-level strategies to the high-level strategies.</p>
+<ol class="simple">
+<li><p>Device-Hamiltonian characterization</p></li>
+<li><p>Pulse optimization</p></li>
+<li><p>Noise-resilient quantum algorithms</p></li>
+<li><p>Noise cancellation</p></li>
+</ol>
 </section>
 
     <script type="text/x-thebe-config">
@@ -414,10 +437,10 @@ title="Print to PDF"
             <p class="prev-next-title">Randomness</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="implementation.html" title="next page">
+    <a class='right-next' id="next-link" href="device.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Physical Implementation</p>
+        <p class="prev-next-title">Device Characterization</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

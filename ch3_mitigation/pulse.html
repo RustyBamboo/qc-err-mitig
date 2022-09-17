@@ -50,9 +50,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"loader": {"load": ["[tex]/physics"]}, "tex": {"packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Quantum Algorithms" href="qu_algorithm.html" />
+    <link rel="next" title="Holonomic Quantum Computing" href="holo.html" />
     <link rel="prev" title="Device Characterization" href="device.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -188,6 +190,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Pulse Optimization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="holo.html">
+   Holonomic Quantum Computing
   </a>
  </li>
  <li class="toctree-l1">
@@ -367,12 +374,36 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#holonomic-quantum-computing">
+   Holonomic Quantum Computing
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -384,6 +415,19 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#holonomic-quantum-computing">
+   Holonomic Quantum Computing
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -393,6 +437,82 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="pulse-optimization">
 <h1>Pulse Optimization<a class="headerlink" href="#pulse-optimization" title="Permalink to this headline">#</a></h1>
+<p>Optimal control theory is an extremely versatile set of techniques that can be applied in many situations. Although optimal control entails many fields, the general idea is to use a feedback loop between an agent and a target system. Optimal control is applied to several quantum technologies, including the pulse shaping of gate designs in quantum circuits to minimize noise. Generally, the pulse shaping is a passive technique, whereby a classically computation takes place beforehand to find an optimal pulse without active feedback from a quantum system }. Gradient Ascent Pulse Engineering (GRAPE) is a powerful technique that uses gradient ascent and a nonlinear optimization solver, such as Broyden–Fletcher–Goldfarb–Shanno (BFGS) algorithm, to solve for a pulse shape to achieve a desired operation. Although powerful, the technique requires the simulation of quantum dynamics on a classical computer, which scales exponentially with quantum system size.</p>
+<p>Quantum optimal control deals with fitting pulses <span class="math notranslate nohighlight">\(a_i(t)\)</span>, or <span class="math notranslate nohighlight">\(a_{i,n}\)</span> for a discrete solution, for a Hamiltonian <span class="math notranslate nohighlight">\(H\)</span> oftern written written in terms of a drift <span class="math notranslate nohighlight">\(H_d\)</span> and several control Hamiltonians <span class="math notranslate nohighlight">\(H_{i}\)</span> that are modulated by pulses. The dynamics is governed by</p>
+<div class="math notranslate nohighlight">
+\[
+    \pdv{}{t}\ket{\psi} = \left(H_d + \sum_i a_i(t)H_{i} \right)\ket{\psi}.
+\]</div>
+<p>Many factors play into the quality of pulses, including time, amplitude, shape, as well as hardware-specific limitations in sampling rate.</p>
+<p>However, dynamic decoupling is a special control technique which can be seen as an active error mitigation technique. This technique employs fast control pulses to effectively decouple the quantum computation from the environment.</p>
+<section id="holonomic-quantum-computing">
+<h2>Holonomic Quantum Computing<a class="headerlink" href="#holonomic-quantum-computing" title="Permalink to this headline">#</a></h2>
+<p>Holonomic quantum computing exploits the notion of <em>parallel transport</em>. Consider, for example, a vector that is transported around in a closed loop along a sphere – as shown in figure~\ref{fig:parallel-transport}. It turns out that the vector itself will rotate by angle <span class="math notranslate nohighlight">\(\alpha\)</span>, dependent on the total <em>area</em> covered by the closed loop. As long as the area remains the same, the actual <em>path</em> does not matter. Holonomic quantum computing exploits this principle to produce gates that are robust to noise in the control <em>path</em>. Namely, it can produce a propogator <span class="math notranslate nohighlight">\(U\)</span> that is factorized into two terms, <span class="math notranslate nohighlight">\(U = V(T) \otimes \Gamma\)</span> where <span class="math notranslate nohighlight">\(V(T)\)</span> is the dynamical part, and <span class="math notranslate nohighlight">\(\Gamma\)</span> is a unitary transformation which is determined only by the geometry of the quantum system and is called geometric phase. We then recall that the geometric factor can be discussed in the case of Abelian U<span class="math notranslate nohighlight">\((1)\)</span> and non-Abelian U<span class="math notranslate nohighlight">\((N)\)</span> phase factors.</p>
+<p>Consider a time-dependent Hamiltonian <span class="math notranslate nohighlight">\(H(t)\)</span>, with a solution to the corresponding Shrödinger equation <span class="math notranslate nohighlight">\(\ket{\psi(t)}\)</span> in a time window <span class="math notranslate nohighlight">\(t \in [0, T]\)</span>. The solution of the Schrödinger equation</p>
+<div class="math notranslate nohighlight">
+\[
+i \dv{}{t} \ket{\psi(t)} = H(t) \ket{\psi(t)}
+\]</div>
+<p>defines a curve</p>
+<div class="math notranslate nohighlight">
+\[
+    C : t \in [0, T] \longrightarrow \ket{\psi(t)} \in \mathcal{H}.
+\]</div>
+<p>Taking a representative <span class="math notranslate nohighlight">\(\ket{\phi(t)}\)</span> along the curve, it is related to the solution via a local phase transformation</p>
+<div class="math notranslate nohighlight">
+\[
+  \ket{\psi(t)} = e^{i\chi(t)} \ket{\phi(t)}
+\]</div>
+<p>We can rewrite the previous equation as:</p>
+<div class="math notranslate nohighlight">
+\[
+i \dv{}{t} \left [ e^{i\chi(t)} \ket{\phi(t)} \right ] = e^{i\chi(t)} H(t) \ket{\phi(t)},
+\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[
+  -\dot\chi(t)e^{i\chi(t)}\ket{\phi(t)} + ie^{i\chi(t)}\ket{\dot\phi(t)} = e^{i \chi(t)}H(t)\ket{\phi(t)}.
+\]</div>
+<p>Multiplying <span class="math notranslate nohighlight">\(\bra{\psi(t)}\)</span> on the left, we have</p>
+<div class="math notranslate nohighlight">
+\[
+  \dot\chi(t) = i\bra{\phi(t)}\ket{\dot\phi(t)} - \bra{\phi(t)}H(t)\ket{\phi(t)},
+\]</div>
+<p>which yields</p>
+<div class="math notranslate nohighlight">
+\[
+  \chi(T) - \chi(0) = \int_0^T i\bra{\phi(t)}\ket{\dot\phi(t)} - \int_0^T \bra{\phi(t)}H(t)\ket{\phi(t)}.
+\]</div>
+<p>The first term on on the right hand side is invariant under time parametrization <span class="math notranslate nohighlight">\(t \rightarrow t^\prime(t)\)</span> and can be written as <span class="math notranslate nohighlight">\(\int i \bra{\phi}\ket{d\phi}\)</span>. The second term is invariant under phase transformations <span class="math notranslate nohighlight">\(\ket{\chi(t)} \rightarrow e^{i\alpha}\ket{\phi(t)}\)</span>, but not under time parametrization. This term is the instantaneous expectation value of the energy <span class="math notranslate nohighlight">\(E(t)\)</span> computing along the solution. The yields a final equation:</p>
+<div class="math notranslate nohighlight">
+\[
+  \chi(T) - \chi(0) = - \int_{\phi(t)} A - \int_{\phi(t)} E(t)dt
+\]</div>
+<p>A special cases occurs when the evolution of the system is cyclic, i.e. <span class="math notranslate nohighlight">\(\ket{\phi(T)} = e^{i\alpha} \ket{\psi(0)}\)</span>. Selecting a representative closed curve <span class="math notranslate nohighlight">\(\ket{\phi(t)}\)</span>, with <span class="math notranslate nohighlight">\(\ket{\phi(t)} = e^{i \chi(t)}\ket{\phi(t)}\)</span> and <span class="math notranslate nohighlight">\(\ket{\phi(T)} = \ket{\phi(0)} = \ket{\psi(0)}\)</span> we have that</p>
+<div class="math notranslate nohighlight">
+\[
+  \alpha = - \oint_{\phi(t)} A - \oint_{\phi(t)} E(t) dt
+\]</div>
+<p>Note that for a closed curve, the integral <span class="math notranslate nohighlight">\(\oint A\)</span> is invariant. The corresponding phase factor <span class="math notranslate nohighlight">\(e^{i \oint A}\)</span> is called the holonomy.</p>
+<p>Take a coherent superposition of the initial and final state</p>
+<div class="math notranslate nohighlight">
+\[
+    \ket{\psi(0)} + \ket{\psi(T)} = (1 + e^{i\alpha}) \ket{\psi(0)}
+\]</div>
+<p>we can in principle observe an interference pattern which is made by two contributions: the dynamical phase which is given by the instantaneous energy as <span class="math notranslate nohighlight">\(\oint E(t) dt\)</span>, and an additional phase shift which is the holonomy <span class="math notranslate nohighlight">\(e^{-\oint A}\)</span>. Since the additional factor <span class="math notranslate nohighlight">\(e^{-i\oint A}\)</span> only depends on the loop, it is called the geometric phase. Since the cyclic dynamics appear as a special feature for the solution of the Schrodinger equation, it can only be determined <em>a posteriori</em>, and, in general, the time dependence of the Hamiltonian does not given any information about it, e.g. the Hamiltonian might not be cyclic, <span class="math notranslate nohighlight">\(H(T) \neq H(0)\)</span>.</p>
+<p>However, finding holonomic gates in state space is abstract.  In an experimental setting, there is no direct handling of quantum states, rather the only information is the effective Hamiltonians that drive a system. It would be preferable to control a system and determine <em>a priori</em> if the evolution of the system will be cyclic. One way this can be done is by working in the <em>adiabatic regime</em>, which places a requirement in the rate of change of a Hamiltonian. Alternatively, one can ignore the adiabatic constraint, but work with systems which have an effective Hamiltonian that provides some sort of known guarantee of cyclic evolution.</p>
+<p>Consider a quantum system with a finite number of levels, <span class="math notranslate nohighlight">\(\mathcal{H} \cong \mathcal{C}^N\)</span>. The Hamiltonian can be written as</p>
+<div class="math notranslate nohighlight">
+\[
+  H = \sum_\alpha h_\alpha \lambda_\alpha
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(h_\alpha\)</span> is a real and the operators <span class="math notranslate nohighlight">\(\{\lambda_\alpha\}_{\alpha=1}^{N^2}\)</span> are a basis in the linear space of Hermitian operators, such as the generalized Gell-Mann matrices, or the Pauli matrices for <span class="math notranslate nohighlight">\(N = 2\)</span>. From this point of view, a Hamiltonian is an element in a <span class="math notranslate nohighlight">\(N^2\)</span>-dimensional real vector space. Hence, a time dependent Hamiltonian,</p>
+<div class="math notranslate nohighlight">
+\[
+H(t) = \sum_\alpha h_\alpha(t) \lambda_\alpha
+\]</div>
+<p>defines a path in <span class="math notranslate nohighlight">\(\mathcal{R}^{N^2}\)</span>, and a cyclic Hamiltonian a closed loop. However, the emphasis here is that the quantum state must be cyclic in order to realize a holonomy, and not necessarily the Hamiltonian. In the adiabatic regime, we can say that a cyclic Hamiltonian will result in a cyclic state, but this is not always true.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -429,10 +549,10 @@ title="Print to PDF"
             <p class="prev-next-title">Device Characterization</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="qu_algorithm.html" title="next page">
+    <a class='right-next' id="next-link" href="holo.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Quantum Algorithms</p>
+        <p class="prev-next-title">Holonomic Quantum Computing</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

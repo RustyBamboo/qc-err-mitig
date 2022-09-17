@@ -452,21 +452,41 @@ title="Print to PDF"
      Example: arbitrary dimension
     </a>
    </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#twirling">
-   Twirling
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#average-gate-fidelity">
-   Average Gate Fidelity
-  </a>
-  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#twirling">
+     Twirling
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#average-gate-fidelity">
+     Average Gate Fidelity
+    </a>
+   </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-protocol">
      The Protocol
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#t-designs">
+   t-designs
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-the-sphere">
+     Example: The Sphere
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#average-fidelity">
+     Average Fidelity
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#clifford-group">
+     Clifford Group
     </a>
    </li>
   </ul>
@@ -505,21 +525,41 @@ title="Print to PDF"
      Example: arbitrary dimension
     </a>
    </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#twirling">
-   Twirling
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#average-gate-fidelity">
-   Average Gate Fidelity
-  </a>
-  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#twirling">
+     Twirling
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#average-gate-fidelity">
+     Average Gate Fidelity
+    </a>
+   </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-protocol">
      The Protocol
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#t-designs">
+   t-designs
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-the-sphere">
+     Example: The Sphere
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#average-fidelity">
+     Average Fidelity
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#clifford-group">
+     Clifford Group
     </a>
    </li>
   </ul>
@@ -754,9 +794,8 @@ hist = plt.hist(eigs_rand, 100, density=True)
 plt.plot()
 ``` -->
 </section>
-</section>
 <section id="twirling">
-<h2>Twirling<a class="headerlink" href="#twirling" title="Permalink to this headline">#</a></h2>
+<h3>Twirling<a class="headerlink" href="#twirling" title="Permalink to this headline">#</a></h3>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Twirling a quantum channel <span class="math notranslate nohighlight">\(\mathcal{E}\)</span> consists of averaging <span class="math notranslate nohighlight">\(\mathcal{E}\)</span> under the composition <span class="math notranslate nohighlight">\(\mathcal{U} \circ \mathcal{E} \circ \mathcal{U}^\dagger\)</span> for unitary operations <span class="math notranslate nohighlight">\(U(\rho) = U \rho U^\dagger\)</span> chosen according to some probability distribution. The average channel</p>
@@ -787,7 +826,7 @@ plt.plot()
 <p>where <span class="math notranslate nohighlight">\(p \in [0, 1]\)</span>.</p>
 </section>
 <section id="average-gate-fidelity">
-<h2>Average Gate Fidelity<a class="headerlink" href="#average-gate-fidelity" title="Permalink to this headline">#</a></h2>
+<h3>Average Gate Fidelity<a class="headerlink" href="#average-gate-fidelity" title="Permalink to this headline">#</a></h3>
 <p>In many instances it is useful to estimate how “close” a quantum operation is to
 a given unitary operation. For instance during a quantum computation one may
 want to implement the unitary gate <span class="math notranslate nohighlight">\(U\)</span> and, as with any physical implementation,
@@ -839,6 +878,7 @@ $$ -->
 <p>where <span class="math notranslate nohighlight">\(\{ A_k \}\)</span> are a set of Kraus operators for <span class="math notranslate nohighlight">\(\mathcal{E}\)</span>.</p>
 <p>p is called the noise strength parameter and characterizes how well <span class="math notranslate nohighlight">\(\mathcal{E}\)</span> approxi-
 mates \mathcal{U}. If <span class="math notranslate nohighlight">\(p\)</span> is close to 1, then <span class="math notranslate nohighlight">\(\mathcal{E}\)</span> approximates <span class="math notranslate nohighlight">\(\mathcal{U}\)</span> well, while if p is close to 0 then <span class="math notranslate nohighlight">\(\mathcal{E}\)</span> does not resemble <span class="math notranslate nohighlight">\(\mathcal{U}\)</span>.</p>
+</section>
 <section id="the-protocol">
 <h3>The Protocol<a class="headerlink" href="#the-protocol" title="Permalink to this headline">#</a></h3>
 <p>Let us now express the protocol for estimating <span class="math notranslate nohighlight">\(\overline{{{F_{g}}}}(\mathcal{E}, \mathcal{U})\)</span>.</p>
@@ -870,6 +910,140 @@ f(U)=p+{\frac{1-p}{N}}+\mathrm{O}\left({\frac{1}{\sqrt{N}}}\right).
 </li>
 </ol>
 </div>
+</section>
+</section>
+<section id="t-designs">
+<h2>t-designs<a class="headerlink" href="#t-designs" title="Permalink to this headline">#</a></h2>
+<p>Let us see how we can overcome the drawbacks described above. However, before doing so, let us consider a sphere for intuition.</p>
+<p>Suppose we have a polynomial of <span class="math notranslate nohighlight">\(d\)</span>-variables, and we seek to compute the average of the polynomial over a <span class="math notranslate nohighlight">\(d\)</span>-dimensional unit sphere. However, this comes with some difficulty:</p>
+<ol class="simple">
+<li><p>Integrate the polynomial over the sphere, using a proper measure – but keeping track of all the parameters is difficult</p></li>
+<li><p>Approximate the average value by sampling points of the sphere uniformly, computing the function value at those points, and then average them – but this only an <em>approximation</em>.</p></li>
+</ol>
+<p>Fortunately, there a nice theorem that tells us if the terms in the polynomial have the same degree of at most <span class="math notranslate nohighlight">\(t\)</span>, then we can compute the average <em>exactly</em> over the sphere using only a number of points. The set of points that give us the result is called a spherical t-design.</p>
+<p>Mathematically, let <span class="math notranslate nohighlight">\(p_t\)</span> be a polynomial in <span class="math notranslate nohighlight">\(d\)</span> variables, with all terms the same degree of at most <span class="math notranslate nohighlight">\(t\)</span>. A set <span class="math notranslate nohighlight">\(X\)</span> is a spherical t-design if</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{|X|} \sum_{x\in X} p_t(x) = \int p_t(u) d\mu (u)
+\]</div>
+<p>holds for all possible <span class="math notranslate nohighlight">\(p_t\)</span>, where <span class="math notranslate nohighlight">\(d\mu\)</span> is the uniform spherical measure. A spherical t-design is also a k-design for all <span class="math notranslate nohighlight">\(k&lt;t\)</span>.</p>
+<section id="example-the-sphere">
+<h3>Example: The Sphere<a class="headerlink" href="#example-the-sphere" title="Permalink to this headline">#</a></h3>
+<p>Let us find the average of the polynomial</p>
+<div class="math notranslate nohighlight">
+\[
+f(x,y,z) = x^2 + xy - xz
+\]</div>
+<p>over our unit sphere. Because all the terms in the polynomial have degree of 2, we can approximate the average by using a 2-design which happens to be a pyramid. However, let use a 3-design (a cube) for convenience – it still forms a 2-design.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cube</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+<span class="p">])</span>
+
+<span class="c1"># normalize to make sure point is in the unit sphere</span>
+<span class="n">cube</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">cube</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let us calculate the average</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span> <span class="o">*</span> <span class="n">z</span>
+
+<span class="n">avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">cube</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">avg</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3333333333333334
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let us extend our definitions so far to unitary matrices. A <em>unitary design</em> utilize evenly-distributed unitaries to average polynomials that are functions of entries of unitary matrices.</p>
+<p>Mathematically, let <span class="math notranslate nohighlight">\(p_{t,t}\)</span> be a polynomial where the <span class="math notranslate nohighlight">\(d\)</span> variables are the entries of a unitary matrix <span class="math notranslate nohighlight">\(U\)</span> such that they have the same degree of at most <span class="math notranslate nohighlight">\(t\)</span>. Moreover, the complex conjugate of those entries must also be the same degree <span class="math notranslate nohighlight">\(t\)</span>. A unitary <span class="math notranslate nohighlight">\(t\)</span>-design is a set of <span class="math notranslate nohighlight">\(K\)</span> unitaries <span class="math notranslate nohighlight">\(\{U_k\}\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{K} \sum_{k=1}^K P_{t,t}(U_i) = \int_{U(d)} P_{t,t}(U) d\mu(U)
+\]</div>
+<p>holds for all possible <span class="math notranslate nohighlight">\(P_{t,t}\)</span> and where <span class="math notranslate nohighlight">\(d\mu\)</span> is the uniform Haar measure.</p>
+<p>There exists a unitary design for all possible combinations of <span class="math notranslate nohighlight">\(t\)</span> and <span class="math notranslate nohighlight">\(d\)</span>. For example, a 2-design in dimension <span class="math notranslate nohighlight">\(d\)</span> has at least <span class="math notranslate nohighlight">\(d^4 - 2d^2 + 2\)</span> elements. But finding these sets (and ones with minimal size) is a challenging problem, but some recent constructions have been made. The most commonly used unitary design is perhaps the 2-design.</p>
+</section>
+<section id="average-fidelity">
+<h3>Average Fidelity<a class="headerlink" href="#average-fidelity" title="Permalink to this headline">#</a></h3>
+<p>Suppose we have a noisy channel <span class="math notranslate nohighlight">\(\cal{E}\)</span>, and our desired unitary operation <span class="math notranslate nohighlight">\(U\)</span>. For simplicity let us suppose we start in an initial state <span class="math notranslate nohighlight">\(\ket{0}\)</span> and we apply Haar-random operators <span class="math notranslate nohighlight">\(V\)</span> to <span class="math notranslate nohighlight">\(\ket{0}\)</span> to get Haar-ransom states. The average fidelity:</p>
+<div class="math notranslate nohighlight">
+\[
+F(\mathcal{E}, U) = \int_{\cal{U}} d\mu(V) \bra{0} V^\dagger U^\dagger \mathcal{E}(V\ket{0}\bra{0}V^\dagger)UV\ket{0}
+\]</div>
+<p>This should look familiar – we have <em>twirled</em> the channel <span class="math notranslate nohighlight">\(\cal{E}\)</span>. Let us look closely at this expression: we have an inner product involving two instances of <span class="math notranslate nohighlight">\(V\)</span> and two instances of <span class="math notranslate nohighlight">\(V^\dagger\)</span>. <em>The expression is a polynomial of degree 2 in both the elements of <span class="math notranslate nohighlight">\(U\)</span> and the complex conjugate!</em> So if can find <span class="math notranslate nohighlight">\(K\)</span> unitaries that form a 2-design, we can compute the average fidelity</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{K} \sum_{i=0}^K \bra{0} V_i^\dagger U^\dagger \mathcal{E}(V_i\ket{0}\bra{0}V_i^\dagger)UV_i\ket{0}.
+\]</div>
+<p>But should be our set of unitaries?</p>
+</section>
+<section id="clifford-group">
+<h3>Clifford Group<a class="headerlink" href="#clifford-group" title="Permalink to this headline">#</a></h3>
+<p>Turns out there are some groups that <em>are unitary designs</em>:</p>
+<ul class="simple">
+<li><p>Pauli group is unitary 1-design</p></li>
+<li><p>Clifford group is unitary 3-design (also 2-design and 1-design)</p></li>
+</ul>
+<p>The n-qubit Pauli group, <span class="math notranslate nohighlight">\(\cal{P}(n)\)</span>, is the set of all tensor products of Pauli operations X, Y, Z, and I. The n-qubit Clifford group, <span class="math notranslate nohighlight">\(\cal{C}(n)\)</span>, is the <em>normalizer</em> of the Pauli group. In other words, the Clifford group is the set of operations that send Paulis to Paulis (up to a phase) under conjugation:</p>
+<div class="math notranslate nohighlight">
+\[
+CPC^\dagger = \pm P^\prime \forall P, \quad P^\prime \in \cal{E}(n), \quad C \in \cal{C}(n)
+\]</div>
+<p>Clifford groups have many interesting properties and have countless of uses in quantum computing. For example, stabilizer circuits – composed of purely Clifford gates and measurement – can be efficiently simulated on a classical computer.</p>
+<p>Clifford group is generated by three gates, Hadamard, S, and CNOT gates. For a single qubit the Clifford group contains 24 elements, and we can see that they are evenly distributed:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qubit_cliffords</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HS&#39;</span><span class="p">,</span> <span class="s1">&#39;SH&#39;</span><span class="p">,</span> <span class="s1">&#39;SS&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HSH&#39;</span><span class="p">,</span> <span class="s1">&#39;HSS&#39;</span><span class="p">,</span> <span class="s1">&#39;SHS&#39;</span><span class="p">,</span> <span class="s1">&#39;SSH&#39;</span><span class="p">,</span> <span class="s1">&#39;SSS&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HSHS&#39;</span><span class="p">,</span> <span class="s1">&#39;HSSH&#39;</span><span class="p">,</span> <span class="s1">&#39;HSSS&#39;</span><span class="p">,</span> <span class="s1">&#39;SHSS&#39;</span><span class="p">,</span> <span class="s1">&#39;SSHS&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HSHSS&#39;</span><span class="p">,</span> <span class="s1">&#39;HSSHS&#39;</span><span class="p">,</span> <span class="s1">&#39;SHSSH&#39;</span><span class="p">,</span> <span class="s1">&#39;SHSSS&#39;</span><span class="p">,</span> <span class="s1">&#39;SSHSS&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HSHSSH&#39;</span><span class="p">,</span> <span class="s1">&#39;HSHSSS&#39;</span><span class="p">,</span> <span class="s1">&#39;HSSHSS&#39;</span>
+<span class="p">]</span>
+
+<span class="n">psi_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+
+<span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="n">j</span><span class="p">]])</span>
+
+<span class="n">states</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">qubit_cliffords</span><span class="p">:</span>
+    <span class="n">op</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">u</span> <span class="o">==</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span>
+            <span class="n">op</span> <span class="o">=</span> <span class="n">op</span> <span class="o">@</span> <span class="n">H</span>
+        <span class="k">elif</span> <span class="n">u</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
+            <span class="n">op</span> <span class="o">=</span> <span class="n">op</span> <span class="o">@</span> <span class="n">S</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">Qobj</span><span class="p">(</span><span class="n">op</span> <span class="o">@</span> <span class="n">psi_0</span><span class="p">)</span> 
+    <span class="n">states</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">Bloch</span><span class="p">()</span>
+<span class="n">b</span><span class="o">.</span><span class="n">point_color</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#ff0000&#39;</span><span class="p">]</span>
+<span class="n">b</span><span class="o">.</span><span class="n">point_marker</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;o&#39;</span><span class="p">]</span>
+<span class="n">b</span><span class="o">.</span><span class="n">add_states</span><span class="p">(</span><span class="n">states</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;point&#39;</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/rand_17_0.png" src="../_images/rand_17_0.png" />
+</div>
+</div>
+<p>Instead of using all Clifford group elements, modern approaches for <a class="reference external" href="https://en.wikipedia.org/wiki/Randomized_benchmarking">randomized benchmarking</a> use uniformly random Clifford operators.</p>
 </section>
 </section>
 </section>

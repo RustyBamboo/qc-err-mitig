@@ -17,58 +17,49 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-#def goe_eigs(N = 10):
-#    A = np.random.randn(N, N)
-#    B = 2**-0.5 * (A + A.T)
-#    E, U = np.linalg.eig(B)
-#
-#    assert np.allclose(U @ U.conj().T, np.eye(N))
-#
-#    D = np.linalg.eigvals(U)  
-#    return np.angle(D)
-#
-#eigs_rand = np.array([goe_eigs() for _ in range(samples)]).flatten()
-#
-#hist = plt.hist(eigs_rand, 100, density=True)
-#plt.plot()
+qubit_cliffords = [
+    '',
+    'H', 'S',
+    'HS', 'SH', 'SS',
+    'HSH', 'HSS', 'SHS', 'SSH', 'SSS',
+    'HSHS', 'HSSH', 'HSSS', 'SHSS', 'SSHS',
+    'HSHSS', 'HSSHS', 'SHSSH', 'SHSSS', 'SSHSS',
+    'HSHSSH', 'HSHSSS', 'HSSHSS'
+]
 
-def goe_eigs(N = 10):
-    # Grand Orthogonal Ensemble: 
-    # Hamiltonians with time reversal symmetry.
-    # N: size of the matrix.
-    A = np.random.randn(N, N)
-    B = 2**-0.5 * (A + A.T)
-    for i in range(B):
-        B[i,i] = 2 * B[i,i]
-    D = np.linalg.eigvals(B)  
-    return np.real(D)
+psi_0 = np.array([[1], [0]])
 
-eigs = np.array([goe_eigs() for _ in range(samples)]).flatten()
-plt.hist(eigs, 100, density = True)
+H = np.array([[1, 1], [1, -1]]) / np.sqrt(2)
+S = np.array([[1, 0], [0, 1j]])
 
+states = []
+
+for c in qubit_cliffords:
+    op = np.eye(2)
+    for u in c:
+        if u == 'H':
+            op = op @ H
+        elif u == 'S':
+            op = op @ S
+    state = qp.Qobj(op @ state) 
+    states.append(state)
+
+b = qp.Bloch()
+b.point_color = ['#ff0000']
+b.point_marker = ['o']
+b.add_states(states, kind='point')
+b.show()
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mTypeError[0m                                 Traceback (most recent call last)
-Input [0;32mIn [9][0m, in [0;36m<cell line: 27>[0;34m()[0m
-[1;32m     24[0m     D [38;5;241m=[39m np[38;5;241m.[39mlinalg[38;5;241m.[39meigvals(B)  
-[1;32m     25[0m     [38;5;28;01mreturn[39;00m np[38;5;241m.[39mreal(D)
-[0;32m---> 27[0m eigs [38;5;241m=[39m np[38;5;241m.[39marray([goe_eigs() [38;5;28;01mfor[39;00m _ [38;5;129;01min[39;00m [38;5;28mrange[39m(samples)])[38;5;241m.[39mflatten()
-[1;32m     28[0m plt[38;5;241m.[39mhist(eigs, [38;5;241m100[39m, density [38;5;241m=[39m [38;5;28;01mTrue[39;00m)
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Input [0;32mIn [11][0m, in [0;36m<cell line: 18>[0;34m()[0m
+[1;32m     23[0m         [38;5;28;01melif[39;00m u [38;5;241m==[39m [38;5;124m'[39m[38;5;124mS[39m[38;5;124m'[39m:
+[1;32m     24[0m             op [38;5;241m=[39m op [38;5;241m@[39m S
+[0;32m---> 25[0m     state [38;5;241m=[39m qp[38;5;241m.[39mQobj(op [38;5;241m@[39m [43mstate[49m) 
+[1;32m     26[0m     states[38;5;241m.[39mappend(state)
+[1;32m     28[0m b [38;5;241m=[39m qp[38;5;241m.[39mBloch()
 
-Input [0;32mIn [9][0m, in [0;36m<listcomp>[0;34m(.0)[0m
-[1;32m     24[0m     D [38;5;241m=[39m np[38;5;241m.[39mlinalg[38;5;241m.[39meigvals(B)  
-[1;32m     25[0m     [38;5;28;01mreturn[39;00m np[38;5;241m.[39mreal(D)
-[0;32m---> 27[0m eigs [38;5;241m=[39m np[38;5;241m.[39marray([[43mgoe_eigs[49m[43m([49m[43m)[49m [38;5;28;01mfor[39;00m _ [38;5;129;01min[39;00m [38;5;28mrange[39m(samples)])[38;5;241m.[39mflatten()
-[1;32m     28[0m plt[38;5;241m.[39mhist(eigs, [38;5;241m100[39m, density [38;5;241m=[39m [38;5;28;01mTrue[39;00m)
-
-Input [0;32mIn [9][0m, in [0;36mgoe_eigs[0;34m(N)[0m
-[1;32m     20[0m A [38;5;241m=[39m np[38;5;241m.[39mrandom[38;5;241m.[39mrandn(N, N)
-[1;32m     21[0m B [38;5;241m=[39m [38;5;241m2[39m[38;5;241m*[39m[38;5;241m*[39m[38;5;241m-[39m[38;5;241m0.5[39m [38;5;241m*[39m (A [38;5;241m+[39m A[38;5;241m.[39mT)
-[0;32m---> 22[0m [38;5;28;01mfor[39;00m i [38;5;129;01min[39;00m [38;5;28;43mrange[39;49m[43m([49m[43mB[49m[43m)[49m:
-[1;32m     23[0m     B[i,i] [38;5;241m=[39m [38;5;241m2[39m [38;5;241m*[39m B[i,i]
-[1;32m     24[0m D [38;5;241m=[39m np[38;5;241m.[39mlinalg[38;5;241m.[39meigvals(B)  
-
-[0;31mTypeError[0m: only integer scalar arrays can be converted to a scalar index
-TypeError: only integer scalar arrays can be converted to a scalar index
+[0;31mNameError[0m: name 'state' is not defined
+NameError: name 'state' is not defined
 

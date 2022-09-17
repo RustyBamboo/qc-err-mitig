@@ -243,7 +243,7 @@ plt.plot()
 ``` -->
 
 
-## Twirling
+### Twirling
 
 
 
@@ -281,7 +281,7 @@ $$
 
 where $p \in [0, 1]$.
 
-## Average Gate Fidelity
+### Average Gate Fidelity
 
 In many instances it is useful to estimate how "close" a quantum operation is to
 a given unitary operation. For instance during a quantum computation one may
@@ -378,6 +378,132 @@ There are two main drawbacks to this protocol for the determining the average fi
 
 ```
 
-```{code-cell} ipython3
+## t-designs
 
+Let us see how we can overcome the drawbacks described above. However, before doing so, let us consider a sphere for intuition.
+
+Suppose we have a polynomial of $d$-variables, and we seek to compute the average of the polynomial over a $d$-dimensional unit sphere. However, this comes with some difficulty:
+
+1. Integrate the polynomial over the sphere, using a proper measure -- but keeping track of all the parameters is difficult
+2. Approximate the average value by sampling points of the sphere uniformly, computing the function value at those points, and then average them -- but this only an _approximation_.
+
+Fortunately, there a nice theorem that tells us if the terms in the polynomial have the same degree of at most $t$, then we can compute the average _exactly_ over the sphere using only a number of points. The set of points that give us the result is called a spherical t-design.
+
+Mathematically, let $p_t$ be a polynomial in $d$ variables, with all terms the same degree of at most $t$. A set $X$ is a spherical t-design if
+
+$$
+\frac{1}{|X|} \sum_{x\in X} p_t(x) = \int p_t(u) d\mu (u)
+$$
+
+holds for all possible $p_t$, where $d\mu$ is the uniform spherical measure. A spherical t-design is also a k-design for all $k<t$.
+
+### Example: The Sphere
+Let us find the average of the polynomial
+
+$$
+f(x,y,z) = x^2 + xy - xz
+$$
+
+over our unit sphere. Because all the terms in the polynomial have degree of 2, we can approximate the average by using a 2-design which happens to be a pyramid. However, let use a 3-design (a cube) for convenience -- it still forms a 2-design.
+
+```{code-cell} ipython3
+cube = np.array([
+    [1, 1, 1], [1, 1, -1], [1, -1, 1], [1, -1, -1],
+    [-1, 1, 1], [-1, 1, -1], [-1, -1, 1], [-1, -1, -1],
+])
+
+# normalize to make sure point is in the unit sphere
+cube = np.array([p / np.linalg.norm(p) for p in cube])
 ```
+
+Now, let us calculate the average
+
+```{code-cell} ipython3
+def f(x,y,z):
+    return x**2 + x * y - x * z
+
+avg = np.mean([f(*p) for p in cube])
+print(avg)
+```
+
+Now let us extend our definitions so far to unitary matrices. A _unitary design_ utilize evenly-distributed unitaries to average polynomials that are functions of entries of unitary matrices.
+
+Mathematically, let $p_{t,t}$ be a polynomial where the $d$ variables are the entries of a unitary matrix $U$ such that they have the same degree of at most $t$. Moreover, the complex conjugate of those entries must also be the same degree $t$. A unitary $t$-design is a set of $K$ unitaries $\{U_k\}$ such that 
+
+$$
+\frac{1}{K} \sum_{k=1}^K P_{t,t}(U_i) = \int_{U(d)} P_{t,t}(U) d\mu(U)
+$$
+
+holds for all possible $P_{t,t}$ and where $d\mu$ is the uniform Haar measure.
+
+There exists a unitary design for all possible combinations of $t$ and $d$. For example, a 2-design in dimension $d$ has at least $d^4 - 2d^2 + 2$ elements. But finding these sets (and ones with minimal size) is a challenging problem, but some recent constructions have been made. The most commonly used unitary design is perhaps the 2-design.
+
+### Average Fidelity
+
+Suppose we have a noisy channel $\cal{E}$, and our desired unitary operation $U$. For simplicity let us suppose we start in an initial state $\ket{0}$ and we apply Haar-random operators $V$ to $\ket{0}$ to get Haar-ransom states. The average fidelity:
+
+$$
+F(\mathcal{E}, U) = \int_{\cal{U}} d\mu(V) \bra{0} V^\dagger U^\dagger \mathcal{E}(V\ket{0}\bra{0}V^\dagger)UV\ket{0}
+$$
+
+This should look familiar -- we have _twirled_ the channel $\cal{E}$. Let us look closely at this expression: we have an inner product involving two instances of $V$ and two instances of $V^\dagger$. *The expression is a polynomial of degree 2 in both the elements of $U$ and the complex conjugate!* So if can find $K$ unitaries that form a 2-design, we can compute the average fidelity
+
+$$
+\frac{1}{K} \sum_{i=0}^K \bra{0} V_i^\dagger U^\dagger \mathcal{E}(V_i\ket{0}\bra{0}V_i^\dagger)UV_i\ket{0}.
+$$
+
+But should be our set of unitaries?
+
+### Clifford Group
+
+Turns out there are some groups that _are unitary designs_: 
+
+- Pauli group is unitary 1-design
+- Clifford group is unitary 3-design (also 2-design and 1-design)
+
+The n-qubit Pauli group, $\cal{P}(n)$, is the set of all tensor products of Pauli operations X, Y, Z, and I. The n-qubit Clifford group, $\cal{C}(n)$, is the _normalizer_ of the Pauli group. In other words, the Clifford group is the set of operations that send Paulis to Paulis (up to a phase) under conjugation:
+
+$$
+CPC^\dagger = \pm P^\prime \forall P, \quad P^\prime \in \cal{E}(n), \quad C \in \cal{C}(n)
+$$
+
+Clifford groups have many interesting properties and have countless of uses in quantum computing. For example, stabilizer circuits -- composed of purely Clifford gates and measurement -- can be efficiently simulated on a classical computer.
+
+Clifford group is generated by three gates, Hadamard, S, and CNOT gates. For a single qubit the Clifford group contains 24 elements, and we can see that they are evenly distributed: 
+
+```{code-cell} ipython3
+qubit_cliffords = [
+    '',
+    'H', 'S',
+    'HS', 'SH', 'SS',
+    'HSH', 'HSS', 'SHS', 'SSH', 'SSS',
+    'HSHS', 'HSSH', 'HSSS', 'SHSS', 'SSHS',
+    'HSHSS', 'HSSHS', 'SHSSH', 'SHSSS', 'SSHSS',
+    'HSHSSH', 'HSHSSS', 'HSSHSS'
+]
+
+psi_0 = np.array([[1], [0]])
+
+H = np.array([[1, 1], [1, -1]]) / np.sqrt(2)
+S = np.array([[1, 0], [0, 1j]])
+
+states = []
+
+for c in qubit_cliffords:
+    op = np.eye(2)
+    for u in c:
+        if u == 'H':
+            op = op @ H
+        elif u == 'S':
+            op = op @ S
+    state = qp.Qobj(op @ psi_0) 
+    states.append(state)
+
+b = qp.Bloch()
+b.point_color = ['#ff0000']
+b.point_marker = ['o']
+b.add_states(states, kind='point')
+b.show()
+```
+
+Instead of using all Clifford group elements, modern approaches for [randomized benchmarking](https://en.wikipedia.org/wiki/Randomized_benchmarking) use uniformly random Clifford operators.

@@ -270,6 +270,35 @@ title="Toggle navigation"
         
     </div>
     <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/RustyBamboo/qc-err-mitig/main?urlpath=tree/ch3_mitigation/pulse.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
 <button onclick="toggleFullScreen()"
   class="headerbtn"
   data-toggle="tooltip"
@@ -337,6 +366,23 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
+        <a href="../_sources/ch3_mitigation/pulse.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download notebook file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
         <a href="../_sources/ch3_mitigation/pulse.md"
    class="headerbtn"
    data-toggle="tooltip"
@@ -397,6 +443,11 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python-example">
+   Python Example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#holonomic-quantum-computing">
    Holonomic Quantum Computing
   </a>
@@ -421,6 +472,11 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python-example">
+   Python Example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#holonomic-quantum-computing">
    Holonomic Quantum Computing
   </a>
@@ -444,7 +500,119 @@ title="Print to PDF"
     \pdv{}{t}\ket{\psi} = \left(H_d + \sum_i a_i(t)H_{i} \right)\ket{\psi}.
 \]</div>
 <p>Many factors play into the quality of pulses, including time, amplitude, shape, as well as hardware-specific limitations in sampling rate.</p>
-<p>However, dynamic decoupling is a special control technique which can be seen as an active error mitigation technique. This technique employs fast control pulses to effectively decouple the quantum computation from the environment.</p>
+<section id="python-example">
+<h2>Python Example<a class="headerlink" href="#python-example" title="Permalink to this headline">#</a></h2>
+<!-- ```{code-cell} ipython3
+freq = [4.80637   , 4.58210259, 4.33777661]
+
+transmon = Transmon(freq)
+``` -->
+<!-- ```{code-cell} ipython3
+import qutip as qp
+from qutip.control.grape import cy_grape_unitary
+
+H = np.array([[1, 1], [1, -1]]) / np.sqrt(2)
+
+U = np.eye(3, dtype='complex128')
+U[:2, :2] = H
+U = qp.Qobj(U)
+
+H_ops = [qp.Qobj(h[:3, :3]) for h in transmon.control()]
+
+H_d = transmon.drift()[:3, :3]
+
+print(U)
+``` -->
+<!-- ```{code-cell} ipython3
+
+
+T = 1
+times = np.linspace(0, T, 100)
+
+
+
+theta, phi = np.random.rand(2)
+
+U = qp.rz(phi) * qp.rx(theta); U
+
+R = 150
+H_ops = [qp.sigmax(), qp.sigmay(), qp.sigmaz()]
+
+
+result = cy_grape_unitary(U, H0, H_ops, R, times, eps=2*np.pi/T, phase_sensitive=False)
+``` --><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qutip</span> <span class="k">as</span> <span class="nn">qp</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+
+<span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">H0</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">qp</span><span class="o">.</span><span class="n">sigmaz</span><span class="p">()</span>
+
+
+<span class="n">R</span> <span class="o">=</span> <span class="mi">150</span>
+<span class="n">H_ops</span> <span class="o">=</span> <span class="p">[</span><span class="n">qp</span><span class="o">.</span><span class="n">sigmax</span><span class="p">(),</span> <span class="n">qp</span><span class="o">.</span><span class="n">sigmay</span><span class="p">()]</span>
+
+<span class="kn">from</span> <span class="nn">qutip.control</span> <span class="kn">import</span> <span class="n">cy_grape_unitary</span>
+<span class="kn">from</span> <span class="nn">qutip.ui.progressbar</span> <span class="kn">import</span> <span class="n">TextProgressBar</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">times</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">initial_amplitudes</span> <span class="o">=</span> <span class="mf">1e-3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">qutip_pulse</span> <span class="o">=</span> <span class="n">cy_grape_unitary</span><span class="p">(</span><span class="n">qp</span><span class="o">.</span><span class="n">Qobj</span><span class="p">(</span><span class="n">H</span><span class="p">),</span> <span class="n">H0</span><span class="p">,</span> <span class="n">H_ops</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span><span class="n">u_start</span><span class="o">=</span><span class="n">initial_amplitudes</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">T</span><span class="p">,</span> <span class="n">phase_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">initial_amplitudes</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/pulse_3_0.png" src="../_images/pulse_3_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qutip_pulse</span><span class="o">.</span><span class="n">u</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">qutip_pulse</span><span class="o">.</span><span class="n">u</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,:])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">qutip_pulse</span><span class="o">.</span><span class="n">u</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,:])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/pulse_4_0.png" src="../_images/pulse_4_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psi0</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">basis</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">c_ops</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">e_ops</span> <span class="o">=</span> <span class="p">[</span><span class="n">qp</span><span class="o">.</span><span class="n">sigmax</span><span class="p">(),</span> <span class="n">qp</span><span class="o">.</span><span class="n">sigmay</span><span class="p">(),</span> <span class="n">qp</span><span class="o">.</span><span class="n">sigmaz</span><span class="p">()]</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">mesolve</span><span class="p">(</span><span class="n">qutip_pulse</span><span class="o">.</span><span class="n">H_t</span><span class="p">,</span> <span class="n">psi0</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">c_ops</span><span class="p">,</span> <span class="n">e_ops</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">Bloch</span><span class="p">()</span>
+<span class="n">b</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">expect</span><span class="p">)</span>
+
+<span class="n">b</span><span class="o">.</span><span class="n">add_states</span><span class="p">(</span><span class="n">psi0</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">add_states</span><span class="p">(</span><span class="n">qp</span><span class="o">.</span><span class="n">Qobj</span><span class="p">(</span><span class="n">H</span><span class="p">)</span> <span class="o">*</span> <span class="n">psi0</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/pulse_6_0.png" src="../_images/pulse_6_0.png" />
+</div>
+</div>
+</section>
 <section id="holonomic-quantum-computing">
 <h2>Holonomic Quantum Computing<a class="headerlink" href="#holonomic-quantum-computing" title="Permalink to this headline">#</a></h2>
 <p>Holonomic quantum computing exploits the notion of <em>parallel transport</em>. Consider, for example, a vector that is transported around in a closed loop along a sphere – as shown in figure~\ref{fig:parallel-transport}. It turns out that the vector itself will rotate by angle <span class="math notranslate nohighlight">\(\alpha\)</span>, dependent on the total <em>area</em> covered by the closed loop. As long as the area remains the same, the actual <em>path</em> does not matter. Holonomic quantum computing exploits this principle to produce gates that are robust to noise in the control <em>path</em>. Namely, it can produce a propogator <span class="math notranslate nohighlight">\(U\)</span> that is factorized into two terms, <span class="math notranslate nohighlight">\(U = V(T) \otimes \Gamma\)</span> where <span class="math notranslate nohighlight">\(V(T)\)</span> is the dynamical part, and <span class="math notranslate nohighlight">\(\Gamma\)</span> is a unitary transformation which is determined only by the geometry of the quantum system and is called geometric phase. We then recall that the geometric factor can be discussed in the case of Abelian U<span class="math notranslate nohighlight">\((1)\)</span> and non-Abelian U<span class="math notranslate nohighlight">\((N)\)</span> phase factors.</p>

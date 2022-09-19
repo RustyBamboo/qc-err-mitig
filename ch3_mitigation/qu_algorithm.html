@@ -50,9 +50,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"loader": {"load": ["[tex]/physics"]}, "tex": {"packages": {"[+]": ["physics"]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Noise Cancellation" href="cancel.html" />
+    <link rel="next" title="A list" href="cancel.html" />
     <link rel="prev" title="Holonomic Quantum Computing" href="holo.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -159,13 +161,13 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../ch2_characterization/meas.html">
-   Measurement Error
+  <a class="reference internal" href="../ch2_characterization/rand.html">
+   Randomness
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../ch2_characterization/rand.html">
-   Randomness
+  <a class="reference internal" href="../ch2_characterization/meas.html">
+   Measurement Error
   </a>
  </li>
 </ul>
@@ -202,7 +204,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="cancel.html">
-   Noise Cancellation
+   A list
   </a>
  </li>
 </ul>
@@ -268,6 +270,35 @@ title="Toggle navigation"
         
     </div>
     <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/RustyBamboo/qc-err-mitig/main?urlpath=tree/ch3_mitigation/qu_algorithm.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
 <button onclick="toggleFullScreen()"
   class="headerbtn"
   data-toggle="tooltip"
@@ -335,6 +366,23 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
+        <a href="../_sources/ch3_mitigation/qu_algorithm.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download notebook file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
         <a href="../_sources/ch3_mitigation/qu_algorithm.md"
    class="headerbtn"
    data-toggle="tooltip"
@@ -372,12 +420,46 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#variational-parameterized-circuits">
+   Variational (Parameterized) Circuits
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python-example">
+   Python Example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tips-and-tricks">
+   Tips and Tricks
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -389,6 +471,29 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#variational-parameterized-circuits">
+   Variational (Parameterized) Circuits
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python-example">
+   Python Example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tips-and-tricks">
+   Tips and Tricks
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -398,6 +503,131 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="quantum-algorithms">
 <h1>Quantum Algorithms<a class="headerlink" href="#quantum-algorithms" title="Permalink to this headline">#</a></h1>
+<p>Can we design algorithms that have inherent noise resilient?</p>
+<section id="variational-parameterized-circuits">
+<h2>Variational (Parameterized) Circuits<a class="headerlink" href="#variational-parameterized-circuits" title="Permalink to this headline">#</a></h2>
+<blockquote>
+<div><p>Sometimes also called <em>quantum machine learning</em></p>
+</div></blockquote>
+<p>Idea: make the gates in a quantum computer dependent on tunable parameters. Then use classical machine learning to optimize these parameters subject to some <em>cost function</em>.</p>
+<img alt="../_images/varitional-circuit.png" class="align-center" src="../_images/varitional-circuit.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\bra{\psi(\theta)} U \ket{\psi(\theta)} &amp;= \sum_{i,j} \bra{\psi(\theta)} \ket{\lambda_i}\bra{\lambda_i} U \ket{\lambda_j}\bra{\lambda_j} \ket{\psi(\theta)}\\
+&amp;= \sum_\lambda \lambda |\bra{\psi_\lambda}\ket{\psi(\theta)}|^2 \ge \sum E_0 \bra{\psi_\lambda}\ket{\psi(\theta)} = E_0 \bra{\psi(\theta)}\ket{\psi(\theta)}
+\end{align}
+\end{split}\]</div>
+</div>
+</section>
+<section id="python-example">
+<h2>Python Example<a class="headerlink" href="#python-example" title="Permalink to this headline">#</a></h2>
+<p>Let us find the eigenvalues of the Hadamard gate <span class="math notranslate nohighlight">\(H\)</span>. We us a parameterized gate <span class="math notranslate nohighlight">\(U(\theta, \phi, \lambda)\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+U(\theta, \phi, \lambda) = \begin{bmatrix} \cos(\theta/2) &amp; -e^{i\lambda} \sin(\theta/2) \\
+e^{i\phi}\sin(\theta/2) &amp; e^{i\lambda + i \phi} \cos(\theta/2)
+\end{bmatrix}
+\end{split}\]</div>
+<p>to prepare the state <span class="math notranslate nohighlight">\(\ket{\psi} = U(\theta, \phi, \lambda)\ket{0}\)</span>. We then calculate the loss function as</p>
+<div class="math notranslate nohighlight" id="equation-eq-loss-function">
+<span class="eqno">(3)<a class="headerlink" href="#equation-eq-loss-function" title="Permalink to this equation">#</a></span>\[
+\mathcal{F} = \bra{\psi} H \ket{\psi}
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">U</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">lam</span><span class="p">):</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">lam</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">)],</span>
+            <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">phi</span> <span class="o">+</span> <span class="n">lam</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">))]</span>
+        <span class="p">])</span>
+    <span class="k">return</span> <span class="n">U</span>
+
+<span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let us plot the loss landscape.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psi0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+
+<span class="k">def</span> <span class="nf">exp_val</span><span class="p">(</span><span class="n">U</span><span class="p">):</span>
+
+    <span class="n">psi_f</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">psi0</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">psi_f</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">H</span> <span class="o">@</span> <span class="n">psi_f</span>
+    <span class="k">return</span> <span class="n">val</span><span class="o">.</span><span class="n">real</span>
+
+<span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">phis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">thetas</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">phis</span><span class="p">)))</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">theta</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">thetas</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">phi</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">phis</span><span class="p">):</span>
+
+        <span class="n">lam</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">exp_val</span><span class="p">(</span><span class="n">U</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">lam</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\cal F$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\theta$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\phi$&quot;</span><span class="p">)</span>
+<span class="c1"># plt.xticks(range(thetas), thetas)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/qu_algorithm_3_0.png" src="../_images/qu_algorithm_3_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">where</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="n">theta_min</span><span class="p">,</span> <span class="n">phi_min</span> <span class="o">=</span> <span class="n">where</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">result</span><span class="p">)]</span>
+<span class="n">theta_max</span><span class="p">,</span> <span class="n">phi_max</span> <span class="o">=</span> <span class="n">where</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">result</span><span class="p">)]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The min/max values: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="n">theta_min</span><span class="p">,</span> <span class="n">phi_min</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="n">theta_max</span><span class="p">,</span> <span class="n">phi_max</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">psi_min</span> <span class="o">=</span> <span class="n">U</span><span class="p">(</span><span class="n">theta_min</span><span class="p">,</span> <span class="n">phi_min</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">@</span> <span class="n">psi0</span>
+<span class="n">psi_max</span> <span class="o">=</span> <span class="n">U</span><span class="p">(</span><span class="n">theta_max</span><span class="p">,</span> <span class="n">phi_max</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">@</span> <span class="n">psi0</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">thetas</span><span class="p">[</span><span class="n">theta_min</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">phis</span><span class="p">[</span><span class="n">phi_min</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">) </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="n">theta_min</span><span class="p">,</span> <span class="n">phi_min</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">: </span><span class="se">\n</span><span class="si">{</span><span class="n">psi_min</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">thetas</span><span class="p">[</span><span class="n">theta_max</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">phis</span><span class="p">[</span><span class="n">phi_max</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">) </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="n">theta_max</span><span class="p">,</span> <span class="n">phi_max</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">: </span><span class="se">\n</span><span class="si">{</span><span class="n">psi_max</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The min/max values: -0.9973360132431252, 0.9950048847599382
+(4.000,0.000) -0.997: 
+[[-0.65364362+0.j]
+ [-0.7568025 +0.j]]
+
+(5.500,3.000) 0.995: 
+[[ 0.70866977+0.j       ]
+ [-0.67743886+0.1971389j]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="tips-and-tricks">
+<h2>Tips and Tricks<a class="headerlink" href="#tips-and-tricks" title="Permalink to this headline">#</a></h2>
+<p><em>Post-selection</em>:</p>
+<blockquote>
+<div><p>Conditioning on the outcome of a measurement on some other qubit.</p>
+</div></blockquote>
+<p>Good way to simulate having good control of the quantum computer, particularly for small systems. Not practical for large system since you may need to condition on an outcome that has very small probability of success.</p>
+<p>Example: Suppose we are finding the expectation value of some of some observable <span class="math notranslate nohighlight">\(\cal O\)</span>. But we know <span class="math notranslate nohighlight">\(\cal O\)</span> has some commutation property with another observable <span class="math notranslate nohighlight">\(\cal \Lambda\)</span>. Therefore we have a constraint on the possible expectation values produced from <span class="math notranslate nohighlight">\(\cal O\)</span> subject to <span class="math notranslate nohighlight">\(\cal \Lambda\)</span>.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -437,7 +667,7 @@ title="Print to PDF"
     <a class='right-next' id="next-link" href="cancel.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Noise Cancellation</p>
+        <p class="prev-next-title">A list</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

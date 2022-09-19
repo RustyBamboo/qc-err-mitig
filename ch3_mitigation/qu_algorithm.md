@@ -28,7 +28,10 @@ Idea: make the gates in a quantum computer dependent on tunable parameters. Then
 ```{note}
 
 $$
-\bra{\psi(\theta)} U \ket{\psi(\theta)} = \sum_i \bra{\psi(\theta)} \ket{i}\bra{i} U \ket{i}\bra{i} \ket{\psi(\theta)}
+\begin{align}
+\bra{\psi(\theta)} U \ket{\psi(\theta)} &= \sum_{i,j} \bra{\psi(\theta)} \ket{\lambda_i}\bra{\lambda_i} U \ket{\lambda_j}\bra{\lambda_j} \ket{\psi(\theta)}\\
+&= \sum_\lambda \lambda |\bra{\psi_\lambda}\ket{\psi(\theta)}|^2 \ge \sum E_0 \bra{\psi_\lambda}\ket{\psi(\theta)} = E_0 \bra{\psi(\theta)}\ket{\psi(\theta)}
+\end{align}
 $$
 
 ```
@@ -112,4 +115,11 @@ print(f"({thetas[theta_max]:.3f},{phis[phi_max]:.3f}) {result[theta_max, phi_max
 
 ## Tips and Tricks
 
-Suppose we are finding the expectation value of some of some observable $\cal O$. But we know $\cal O$ commutes with another observable $\cal \Lambda$. Therefore we have a constraint on the possible expectation values produced from $\cal O$ subject to $\cal \Lambda$. Then we are able to remove the expectation values that do not satisfy this relationship.  
+*Post-selection*:
+
+> Conditioning on the outcome of a measurement on some other qubit.
+
+Good way to simulate having good control of the quantum computer, particularly for small systems. Not practical for large system since you may need to condition on an outcome that has very small probability of success.
+
+Example: Suppose we are finding the expectation value of some of some observable $\cal O$. But we know $\cal O$ has some commutation property with another observable $\cal \Lambda$. Therefore we have a constraint on the possible expectation values produced from $\cal O$ subject to $\cal \Lambda$.
+
